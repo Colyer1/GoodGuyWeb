@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GoodGuyBets — Results</title>
+  <meta name="description" content="GoodGuyBets results: track record, slips, and real member testimonials." />
+  <meta name="theme-color" content="#c31111" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+
+  <!-- Swiper -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <style>
+    :root{
+      --bg:#070707;
+      --panel:#121214;
+      --text:#f3f3f3;
+      --muted:#bdbdbd;
+      --red-1:#a60808;
+      --red-2:#c31111;
+      --red-3:#e21717;
+      --accent:#e6e6e6;
+      --glow: 0 0 32px rgba(194,17,17,.28);
+      --radius:14px;
+      --ring: inset 0 0 0 1px rgba(230,230,230,.06);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    html,body{
+      margin:0;
+      background:
+        radial-gradient(1200px 800px at 85% -10%, rgba(226,23,23,.22), transparent 60%),
+        radial-gradient(1000px 700px at 8% 35%,  rgba(194,17,17,.20), transparent 65%),
+        radial-gradient(900px 600px  at 82% 90%, rgba(226,23,23,.16), transparent 60%),
+        linear-gradient(135deg,#000000 0%,#1a0000 18%,#0b0b0c 32%,#7a0000 50%,#0a0a0a 68%,#b30000 82%,#000000 100%);
+      background-attachment: fixed;
+      color:var(--text);
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      overflow-x:hidden;
+    }
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+    button{font-family:inherit}
+
+    /* Header */
+    .nav{
+      position:sticky;top:0;z-index:60;
+      backdrop-filter:saturate(150%) blur(10px);
+      background:linear-gradient(to bottom, rgba(7,7,7,.92), rgba(7,7,7,.75));
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .nav-inner{
+      max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;
+      gap:14px;
+    }
+    .brand{display:flex;gap:12px;align-items:center;min-width:max-content}
+    .brand-logo{width:38px;height:38px;border-radius:8px;background:linear-gradient(180deg,#1a1a1d,#0c0c0d);display:grid;place-items:center;box-shadow:var(--glow)}
+    .brand-name{font-family:"Bebas Neue",system-ui;font-size:28px;letter-spacing:.5px}
+    .nav-links{display:flex;gap:18px;font-weight:800;color:#e9e9e9;font-size:13px;align-items:center}
+    .nav-links a{opacity:.92}
+    .nav-links a:hover{opacity:1;text-decoration:underline;text-underline-offset:4px}
+    .nav-cta{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:12px 18px;border-radius:10px;font-weight:900;
+      background:linear-gradient(180deg,var(--red-2),var(--red-1));
+      box-shadow:0 10px 24px rgba(226,23,23,.26);
+      transition:transform .15s ease, box-shadow .2s ease, filter .2s ease;
+      border:1px solid rgba(255,255,255,.08);
+      font-size:13px;
+      white-space:nowrap;
+    }
+    .nav-cta:hover{transform:translateY(-1px);filter:saturate(110%);box-shadow:0 14px 36px rgba(226,23,23,.36)}
+
+    /* Mobile menu */
+    .nav-right{display:flex;align-items:center;gap:10px}
+    .burger{
+      display:none;
+      width:42px;height:42px;border-radius:12px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      color:#fff;
+      cursor:pointer;
+      backdrop-filter: blur(6px);
+    }
+    .burger svg{width:20px;height:20px}
+    .mobile-drawer{
+      position:fixed;inset:0;z-index:80;
+      background:rgba(0,0,0,.72);
+      opacity:0;pointer-events:none;
+      transition:opacity .18s ease;
+    }
+    .mobile-drawer.open{opacity:1;pointer-events:auto}
+    .drawer-panel{
+      position:absolute;top:12px;right:12px;left:12px;
+      max-width:520px;margin-left:auto;
+      border-radius:18px;
+      background:linear-gradient(180deg,#141416,#0e0e10);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:0 18px 60px rgba(0,0,0,.65), 0 0 60px rgba(226,23,23,.18);
+      overflow:hidden;
+    }
+    .drawer-head{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 14px;border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .drawer-links{display:grid;gap:10px;padding:14px}
+    .drawer-links a{
+      padding:12px 12px;border-radius:12px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      font-weight:900;
+    }
+    .drawer-links a:hover{filter:brightness(1.05)}
+    .drawer-cta{display:grid;gap:10px;padding:0 14px 14px}
+    .drawer-cta .btn{justify-content:center}
+    .xbtn{
+      width:40px;height:40px;border-radius:12px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      color:#fff;cursor:pointer;
+    }
+    @media (max-width:860px){
+      .nav-links{display:none}
+      .burger{display:inline-grid;place-items:center}
+    }
+
+    /* Layout */
+    .section{padding:58px 20px}
+    .container{max-width:1200px;margin:auto}
+    .eyebrow{color:var(--muted);text-transform:uppercase;letter-spacing:.22em;font-size:12px;font-weight:900}
+    .h1{margin:10px 0 10px;font-family:"Bebas Neue",system-ui;letter-spacing:1px;font-size:56px;line-height:1.03;text-transform:uppercase}
+    .sub{max-width:900px;color:#e3e3e3;font-size:16px;margin:0}
+    .glass{background:linear-gradient(180deg,#141418,#0f0f12);border-radius:var(--radius);border:1px solid rgba(255,255,255,.08);box-shadow:var(--ring)}
+
+    /* Slider */
+    .slider-wrap{position:relative}
+    .nav-btn{
+      position:absolute;top:50%;transform:translateY(-50%);
+      width:42px;height:42px;border-radius:50%;
+      display:grid;place-items:center;cursor:pointer;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      color:#fff;user-select:none;
+      transition:filter .15s ease;
+      backdrop-filter: blur(4px);
+      z-index:3;
+    }
+    .nav-btn:hover{filter:brightness(1.1)}
+    .nav-btn svg{width:20px;height:20px}
+    .nav-prev{left:-12px}
+    .nav-next{right:-12px}
+    @media (max-width:640px){
+      .h1{font-size:44px}
+      .nav-prev{left:-6px}
+      .nav-next{right:-6px}
+    }
+
+    .swiper{width:100%}
+    .swiper-slide{height:auto}
+    .slide-card{position:relative}
+    .slide-card img{border-radius:12px;border:1px solid rgba(255,255,255,.08)}
+    .caption{
+      position:absolute;left:8px;right:8px;bottom:8px;
+      padding:8px 10px;font-size:13px;line-height:1.25;
+      color:#f2f2f2;border-radius:10px;
+      background:linear-gradient(180deg,rgba(0,0,0,.0),rgba(0,0,0,.35));
+      backdrop-filter: blur(2px);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    /* Testimonials */
+    .testi-card img{border-radius:12px;border:1px solid rgba(255,255,255,.08)}
+    .testi-meta{padding:10px 12px 14px;color:#d9d9d9;font-size:14px}
+    .testi-video{
+      aspect-ratio: 9/16;
+      width:100%;
+      border-radius:12px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.08);
+      background:#131316;
+    }
+    .testi-video video{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:cover;
+      background:#000;
+    }
+
+    /* CTA strip */
+    .cta-strip{
+      display:flex;gap:12px;flex-wrap:wrap;align-items:center;
+      padding:16px;border-radius:16px;
+      background:linear-gradient(180deg,#141416,#0e0e10);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:0 18px 70px rgba(0,0,0,.50);
+    }
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 18px;border-radius:12px;font-weight:900;letter-spacing:.02em;font-size:14px;cursor:pointer}
+    .btn-primary{background:linear-gradient(180deg,var(--red-3),var(--red-2));box-shadow:0 10px 28px rgba(226,23,23,.35);border:1px solid rgba(255,255,255,.12)}
+    .btn-primary:hover{filter:saturate(112%) brightness(1.03)}
+    .btn-ghost{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:var(--accent)}
+    .btn-ghost:hover{filter:brightness(1.05)}
+    .btn-discord{background:#5865F2;color:#fff;border:none;border-radius:10px;padding:12px 18px;font-weight:900;cursor:pointer;font-size:14px;}
+    .btn-discord:hover{filter:brightness(1.05)}
+
+    /* Footer */
+    footer{padding:36px 20px;background:rgba(0,0,0,.55);border-top:1px solid rgba(255,255,255,.06);color:#b9b9b9;font-size:13px}
+    .footer-inner{max-width:1200px;margin:auto;display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between}
+    .legal{max-width:800px}
+    .footer-links a{opacity:.92}
+    .footer-links a:hover{opacity:1;text-decoration:underline;text-underline-offset:4px}
+
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease, transform .5s ease}
+    .reveal.in{opacity:1;transform:none}
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto}
+      .reveal{opacity:1;transform:none;transition:none}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="GoodGuyBets home">
+        <div class="brand-logo" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#e6e6e6"><path d="M3 6h8v4H7v4h4v4H3V6zm10 0h8l-4 12h-8l4-12z"/></svg>
+        </div>
+        <div class="brand-name">GoodGuyBets</div>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="community.html">Community</a>
+        <a href="https://www.winible.com/goodguysbets" target="_blank" rel="noopener">Join</a>
+      </nav>
+
+      <div class="nav-right">
+        <a class="nav-cta" href="https://www.winible.com/goodguysbets" target="_blank" rel="noopener">Join Now</a>
+        <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M4 7h16v2H4V7zm0 8h16v2H4v-2zm0-4h16v2H4v-2z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE DRAWER -->
+  <div class="mobile-drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="drawer-head">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="brand-logo" style="width:34px;height:34px;border-radius:10px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#e6e6e6"><path d="M3 6h8v4H7v4h4v4H3V6zm10 0h8l-4 12h-8l4-12z"/></svg>
+          </div>
+          <strong>GoodGuyBets</strong>
+        </div>
+        <button class="xbtn" id="drawerClose" aria-label="Close menu">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true">
+            <path d="M18.3 5.71 12 12l6.3 6.29-1.41 1.42L12 13.41l-6.89 6.3-1.42-1.41L10.59 12 3.69 5.71 5.11 4.29 12 10.59l6.89-6.3z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="drawer-links">
+        <a href="index.html" data-close-drawer>Home</a>
+        <a href="community.html" data-close-drawer>Community</a>
+        <a href="https://www.winible.com/goodguysbets" target="_blank" rel="noopener">Join</a>
+      </div>
+      <div class="drawer-cta">
+        <a class="btn btn-primary" href="https://www.winible.com/goodguysbets" target="_blank" rel="noopener">Claim Your Spot</a>
+        <a class="btn btn-discord" href="https://discord.gg/P3NjC9ZhtP" target="_blank" rel="noopener">Join Free Discord</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER BLOCK -->
+  <section class="section">
+    <div class="container">
+      <div class="eyebrow reveal">Proof • Transparency • Process</div>
+      <h1 class="h1 reveal">Results & Track Record</h1>
+      <p class="sub reveal">Real slips, real results. No cherry-picking. Use this page as your “proof hub” before you join.</p>
+
+      <div style="height:14px"></div>
+      <div class="cta-strip reveal">
+        <a class="btn btn-primary" href="https://www.winible.com/goodguysbets" target="_blank" rel="noopener">Join Now</a>
+        <a class="btn btn-discord" href="https://discord.gg/P3NjC9ZhtP" target="_blank" rel="noopener">Free Discord</a>
+        <a class="btn btn-ghost" href="community.html">See Community</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRACK RECORD -->
+  <section class="section reveal">
+    <div class="container">
+      <h2 class="h1" style="font-size:44px;margin:0 0 10px;">Track Record</h2>
+      <p class="sub" style="margin:0 0 22px;">Swipe through the monthly / season breakdowns (your existing assets).</p>
+
+      <div class="glass slider-wrap" style="padding:14px">
+        <button id="slips-prev" class="nav-btn nav-prev" aria-label="Previous">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </button>
+        <button id="slips-next" class="nav-btn nav-next" aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+        </button>
+
+        <div class="swiper" id="slips-swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide"><figure class="slide-card"><img src="assets/track/track-oct-2024.webp" alt="Pikkit results October 2024" loading="lazy" decoding="async"><figcaption class="caption">October 2024 · +$117,690 · ROI +22.17%</figcaption></figure></div>
+            <div class="swiper-slide"><figure class="slide-card"><img src="assets/track/track-sep-2024.webp" alt="Pikkit results September 2024" loading="lazy" decoding="async"><figcaption class="caption">September 2024 · +$37,581 · ROI +12.82%</figcaption></figure></div>
+            <div class="swiper-slide"><figure class="slide-card"><img src="assets/track/track-dec-2024.webp" alt="Pikkit results December 2024" loading="lazy" decoding="async"><figcaption class="caption">December 2024 · +$31,053 · ROI +8.71%</figcaption></figure></div>
+            <div class="swiper-slide"><figure class="slide-card"><img src="assets/track/track-jan-2025.webp" alt="Pikkit results January 2025" loading="lazy" decoding="async"><figcaption class="caption">January 2025 · +$75,454 · ROI +16.09%</figcaption></figure></div>
+            <div class="swiper-slide"><figure class="slide-card"><img src="assets/track/track-2025.webp" alt="Pikkit results 2025 YTD" loading="lazy" decoding="async"><figcaption class="caption">2025 YTD · +$238,286 · ROI +14.44%</figcaption></figure></div>
+            <div class="swiper-slide"><figure class="slide-card"><img src="assets/track/track-2024.webp" alt="Pikkit results 2024" loading="lazy" decoding="async"><figcaption class="caption">2024 · +$163,600 · ROI +4.97%</figcaption></figure></div>
+            <div class="swiper-slide"><figure class="slide-card"><img src="assets/track/track-2023.webp" alt="Pikkit results 2023" loading="lazy" decoding="async"><figcaption class="caption">2023 · +$161,817 · ROI +4.32%</figcaption></figure></div>
+            <div class="swiper-slide"><figure class="slide-card"><img src="assets/track/track-nfl-2024.webp" alt="NFL 2024 profit/ROI breakdown" loading="lazy" decoding="async"><figcaption class="caption">NFL 2024 · +$80,458 · ROI +9.15%</figcaption></figure></div>
+            <div class="swiper-slide"><figure class="slide-card"><img src="assets/track/track-sb-eagles.webp" alt="Super Bowl pick Eagles ML +104" loading="lazy" decoding="async"><figcaption class="caption">Super Bowl: Eagles ML +104 (2/9/25)</figcaption></figure></div>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section reveal">
+    <div class="container">
+      <h2 class="h1" style="font-size:44px;margin:0 0 10px;">Member Testimonials</h2>
+      <p class="sub" style="margin:0 0 22px;">Short clips + screenshots from real members. (You can swap @member names later.)</p>
+
+      <div class="glass slider-wrap" style="padding:14px">
+        <button id="testi-prev" class="nav-btn nav-prev" aria-label="Previous">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </button>
+        <button id="testi-next" class="nav-btn nav-next" aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+        </button>
+
+        <div class="swiper" id="testi-swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="testi-card">
+                <div class="testi-video">
+                  <video controls playsinline preload="metadata">
+                    <source src="assets/testi/TEST5.MOV" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+                <div class="testi-meta"><strong>@member</strong> – “Been following for a while… legit the best results I’ve had.”</div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="testi-card">
+                <div class="testi-video">
+                  <video controls playsinline preload="metadata">
+                    <source src="assets/testi/TEST4.MOV" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+                <div class="testi-meta"><strong>@member</strong> – “Super transparent. I finally understand how to bet smart.”</div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="testi-card">
+                <div class="testi-video">
+                  <video controls playsinline preload="metadata">
+                    <source src="assets/testi/TEST3.MOV" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+                <div class="testi-meta"><strong>@member</strong> – “Joined last month… bankroll up and stress is down.”</div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="testi-card">
+                <div class="testi-video">
+                  <video controls playsinline preload="metadata">
+                    <source src="assets/testi/test.MOV" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+                <div class="testi-meta"><strong>@member</strong> – “Honestly shocked at how accurate these slips are.”</div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="testi-card">
+                <div class="testi-video">
+                  <video controls playsinline preload="metadata">
+                    <source src="assets/testi/TEST1.MOV" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+                <div class="testi-meta"><strong>@member</strong> – “Easiest betting experience I’ve ever had. Worth every penny.”</div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="testi-card">
+                <img src="assets/testi/testi-okc-finals.webp" alt="Member testimonial: 6-1 in the finals is insane" loading="lazy" decoding="async">
+                <div class="testi-meta"><strong>@member</strong> – “Incredible season! 6-1 in the finals is insane.”</div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="testi-card">
+                <img src="assets/testi/testi-shoutout.webp" alt="Member testimonial shoutout: been on fire" loading="lazy" decoding="async">
+                <div class="testi-meta"><strong>@member</strong> – “Quick shoutout — I’ve gone 3-1 in Finals and 5-2 MLB since tailing.”</div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="testi-card">
+                <img src="assets/testi/testi-67win.webp" alt="Member testimonial 67% win rate and signed up" loading="lazy" decoding="async">
+                <div class="testi-meta"><strong>@member</strong> – “67% win rate since following. Bought the two-month package.”</div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="testi-card">
+                <img src="assets/testi/testi-genius.webp" alt="Member testimonial: group chat thinks I'm a genius" loading="lazy" decoding="async">
+                <div class="testi-meta"><strong>@member</strong> – “My group chat thinks I’m a genius now… just copy your slips.”</div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="testi-card">
+                <img src="assets/testi/testi-doubled.webp" alt="Member testimonial: doubled bankroll in two weeks" loading="lazy" decoding="async">
+                <div class="testi-meta"><strong>@member</strong> – “Doubled my bankroll in two weeks with y’all.”</div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="testi-card">
+                <img src="assets/testi/testi-unit-value.webp" alt="Member testimonial: raised unit value" loading="lazy" decoding="async">
+                <div class="testi-meta"><strong>@member</strong> – “Won so much I raised my unit value again.”</div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="testi-card">
+                <img src="assets/testi/testi-300-to-1000.webp" alt="Member testimonial: $300 to $1000" loading="lazy" decoding="async">
+                <div class="testi-meta"><strong>@member</strong> – “From $300 to over $1000 in a month following your picks.”</div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div>© <span id="year"></span> GoodGuyBets</div>
+      <div class="legal">For entertainment & educational purposes only. Not a sportsbook. Wager responsibly. 1-800-GAMBLER.</div>
+      <div class="footer-links">
+        <a href="index.html">Home</a> ·
+        <a href="community.html">Community</a> ·
+        <a href="https://www.winible.com/goodguysbets" target="_blank" rel="noopener">Join</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Slips swiper
+    const autoplaySlow = { delay: 5000, disableOnInteraction: false };
+    new Swiper('#slips-swiper', {
+      loop:true,
+      spaceBetween:12,
+      autoplay: autoplaySlow,
+      breakpoints:{
+        0:{slidesPerView:1.12},
+        520:{slidesPerView:1.4},
+        800:{slidesPerView:2.2},
+        1100:{slidesPerView:3}
+      },
+      pagination:{el:'.section:nth-of-type(2) .swiper-pagination',clickable:true},
+      navigation:{ nextEl:'#slips-next', prevEl:'#slips-prev' }
+    });
+
+    // Testimonials swiper
+    new Swiper('#testi-swiper', {
+      loop:true,
+      spaceBetween:12,
+      autoplay: autoplaySlow,
+      breakpoints:{
+        0:{slidesPerView:1.12},
+        520:{slidesPerView:1.4},
+        800:{slidesPerView:2.2},
+        1100:{slidesPerView:3}
+      },
+      pagination:{el:'.section:nth-of-type(3) .swiper-pagination',clickable:true},
+      navigation:{ nextEl:'#testi-next', prevEl:'#testi-prev' }
+    });
+
+    // Mobile drawer
+    (function(){
+      const burger = document.getElementById('burger');
+      const drawer = document.getElementById('drawer');
+      const close = document.getElementById('drawerClose');
+      if(!burger || !drawer || !close) return;
+
+      function open(){
+        drawer.classList.add('open');
+        drawer.setAttribute('aria-hidden','false');
+        burger.setAttribute('aria-expanded','true');
+        document.body.style.overflow = 'hidden';
+      }
+      function shut(){
+        drawer.classList.remove('open');
+        drawer.setAttribute('aria-hidden','true');
+        burger.setAttribute('aria-expanded','false');
+        document.body.style.overflow = '';
+      }
+
+      burger.addEventListener('click', open);
+      close.addEventListener('click', shut);
+      drawer.addEventListener('click', (e)=>{ if(e.target === drawer) shut(); });
+      document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') shut(); });
+      document.querySelectorAll('[data-close-drawer]').forEach(a=>a.addEventListener('click', shut));
+    })();
+
+    // Reveal
+    (function(){
+      const els = document.querySelectorAll('.reveal');
+      if(!('IntersectionObserver' in window) || !els.length){
+        els.forEach(el=>el.classList.add('in'));
+        return;
+      }
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      els.forEach(el=>io.observe(el));
+    })();
+  </script>
+</body>
+</html>

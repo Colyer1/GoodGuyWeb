@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GoodGuyBets — Proof & Track Record</title>
+  <meta name="description" content="Track record snapshots and member testimonials — clean, simple, verifiable." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="GoodGuyBets — Proof & Track Record" />
+  <meta property="og:description" content="Track record snapshots and member testimonials — clean, simple, verifiable." />
+  <meta property="og:type" content="website" />
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#c31111" />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+</head>
+<body>
+  <div class="page">
+
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="GoodGuyBets home">
+        <div class="brand-logo" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#e6e6e6"><path d="M3 6h8v4H7v4h4v4H3V6zm10 0h8l-4 12h-8l4-12z"/></svg>
+        </div>
+        <div class="brand-name">GoodGuyBets</div>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a data-nav href="index.html">Home</a>
+        <a data-nav href="proof.html">Proof</a>
+        <a data-nav href="community.html">Community</a>
+        <a data-nav href="call.html">Calls</a>
+        <a data-nav href="faq.html">FAQ</a>
+      </nav>
+
+      <div class="nav-right">
+        <a class="nav-cta" href="https://www.winible.com/goodguysbets" target="_blank" rel="noopener">Join Now</a>
+        <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M4 7h16v2H4V7zm0 8h16v2H4v-2zm0-4h16v2H4v-2z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="drawer-head">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="brand-logo" style="width:34px;height:34px;border-radius:10px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#e6e6e6"><path d="M3 6h8v4H7v4h4v4H3V6zm10 0h8l-4 12h-8l4-12z"/></svg>
+          </div>
+          <strong>GoodGuyBets</strong>
+        </div>
+        <button class="xbtn" id="drawerClose" aria-label="Close menu">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true">
+            <path d="M18.3 5.71 12 12l6.3 6.29-1.41 1.42L12 13.41l-6.89 6.3-1.42-1.41L10.59 12 3.69 5.71 5.11 4.29 12 10.59l6.89-6.3z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="drawer-links">
+        <a href="index.html" data-close-drawer>Home</a>
+        <a href="proof.html" data-close-drawer>Proof</a>
+        <a href="community.html" data-close-drawer>Community</a>
+        <a href="call.html" data-close-drawer>Calls</a>
+        <a href="faq.html" data-close-drawer>FAQ</a>
+        <a href="https://www.winible.com/goodguysbets" target="_blank" rel="noopener">Winible</a>
+      </div>
+      <div class="drawer-cta">
+        <a class="btn btn-primary" href="https://www.winible.com/goodguysbets" target="_blank" rel="noopener">Claim Your Spot</a>
+        <a class="btn btn-discord" href="https://discord.gg/P3NjC9ZhtP" target="_blank" rel="noopener">Join Free Discord</a>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="promo-bar">
+    <div class="promo-inner">
+      <span class="promo-label">Limited Time</span>
+      <span class="promo-text">Season promo is live — lock in your spot before it’s gone.</span>
+      <span class="promo-countdown" id="promo-countdown">--d --h --m --s</span>
+      <a href="https://www.winible.com/goodguysbets" target="_blank" rel="noopener" class="promo-cta">Claim Offer</a>
+    </div>
+  </div>
+
+    <main>
+
+<section class="page-head">
+  <div class="container">
+    <div class="kicker reveal">Proof you can verify</div>
+    <h1 class="page-title reveal">Track Record</h1>
+    <p class="page-sub reveal">Quick proof snapshots. Clean. Simple. Verifiable.</p>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container panel pad slider-wrap">
+    <button id="slips-prev" class="nav-btn nav-prev" aria-label="Previous">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </button>
+    <button id="slips-next" class="nav-btn nav-next" aria-label="Next">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+    </button>
+
+    <div class="swiper" id="slips-swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><figure class="slide-card"><img src="assets/track/track-oct-2024.webp" alt="Pikkit results October 2024" loading="lazy" decoding="async"><figcaption class="caption">October 2024 · +$117,690 · ROI +22.17%</figcaption></figure></div>
+        <div class="swiper-slide"><figure class="slide-card"><img src="assets/track/track-sep-2024.webp" alt="Pikkit results September 2024" loading="lazy" decoding="async"><figcaption class="caption">September 2024 · +$37,581 · ROI +12.82%</figcaption></figure></div>
+        <div class="swiper-slide"><figure class="slide-card"><img src="assets/track/track-dec-2024.webp" alt="Pikkit results December 2024" loading="lazy" decoding="async"><figcaption class="caption">December 2024 · +$31,053 · ROI +8.71%</figcaption></figure></div>
+        <div class="swiper-slide"><figure class="slide-card"><img src="assets/track/track-jan-2025.webp" alt="Pikkit results January 2025" loading="lazy" decoding="async"><figcaption class="caption">January 2025 · +$75,454 · ROI +16.09%</figcaption></figure></div>
+        <div class="swiper-slide"><figure class="slide-card"><img src="assets/track/track-2025.webp" alt="Pikkit results 2025 YTD" loading="lazy" decoding="async"><figcaption class="caption">2025 YTD · +$238,286 · ROI +14.44%</figcaption></figure></div>
+        <div class="swiper-slide"><figure class="slide-card"><img src="assets/track/track-2024.webp" alt="Pikkit results 2024" loading="lazy" decoding="async"><figcaption class="caption">2024 · +$163,600 · ROI +4.97%</figcaption></figure></div>
+        <div class="swiper-slide"><figure class="slide-card"><img src="assets/track/track-2023.webp" alt="Pikkit results 2023" loading="lazy" decoding="async"><figcaption class="caption">2023 · +$161,817 · ROI +4.32%</figcaption></figure></div>
+        <div class="swiper-slide"><figure class="slide-card"><img src="assets/track/track-nfl-2024.webp" alt="NFL 2024 profit/ROI breakdown" loading="lazy" decoding="async"><figcaption class="caption">NFL 2024 · +$80,458 · ROI +9.15%</figcaption></figure></div>
+        <div class="swiper-slide"><figure class="slide-card"><img src="assets/track/track-sb-eagles.webp" alt="Super Bowl pick Eagles ML +104" loading="lazy" decoding="async"><figcaption class="caption">Super Bowl: Eagles ML +104 (2/9/25)</figcaption></figure></div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    <div class="kicker">Recent wins & streaks</div>
+    <h2 class="page-title" style="font-size:44px;margin:10px 0 14px;">Live wins feed</h2>
+    <div class="panel pad">
+      <div class="ticker">
+        <div class="ticker-label">Live Wins</div>
+        <div class="ticker-marquee"><span id="wins-ticker"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    <div class="kicker">Real members</div>
+    <h2 class="page-title" style="font-size:44px;margin:10px 0 14px;">Testimonials</h2>
+
+    <div class="panel pad slider-wrap">
+      <button id="testi-prev" class="nav-btn nav-prev" aria-label="Previous">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+      </button>
+      <button id="testi-next" class="nav-btn nav-next" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+      </button>
+
+      <div class="swiper" id="testi-swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="testi-card">
+              <div class="testi-video">
+                <video controls playsinline preload="metadata">
+                  <source src="assets/testi/TEST5.MOV" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="testi-meta"><strong>@member</strong> – “Been following for a while… legit the best results I’ve had.”</div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="testi-card">
+              <div class="testi-video">
+                <video controls playsinline preload="metadata">
+                  <source src="assets/testi/TEST4.MOV" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="testi-meta"><strong>@member</strong> – “Super transparent. I finally understand how to bet smart.”</div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="testi-card">
+              <div class="testi-video">
+                <video controls playsinline preload="metadata">
+                  <source src="assets/testi/TEST3.MOV" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="testi-meta"><strong>@member</strong> – “Joined last month… bankroll up and stress is down.”</div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="testi-card">
+              <div class="testi-video">
+                <video controls playsinline preload="metadata">
+                  <source src="assets/testi/test.MOV" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="testi-meta"><strong>@member</strong> – “Honestly shocked at how accurate these slips are.”</div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="testi-card">
+              <div class="testi-video">
+                <video controls playsinline preload="metadata">
+                  <source src="assets/testi/TEST1.MOV" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="testi-meta"><strong>@member</strong> – “Easiest betting experience I’ve ever had. Worth every penny.”</div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="testi-card">
+              <img src="assets/testi/testi-okc-finals.webp" alt="Member testimonial: 6-1 in the finals is insane" loading="lazy" decoding="async">
+              <div class="testi-meta"><strong>@member</strong> – “Incredible season! 6-1 in the finals is insane.”</div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="testi-card">
+              <img src="assets/testi/testi-shoutout.webp" alt="Member testimonial shoutout: been on fire" loading="lazy" decoding="async">
+              <div class="testi-meta"><strong>@member</strong> – “Quick shoutout — I’ve gone 3-1 in Finals and 5-2 MLB since tailing.”</div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="testi-card">
+              <img src="assets/testi/testi-67win.webp" alt="Member testimonial 67% win rate and signed up" loading="lazy" decoding="async">
+              <div class="testi-meta"><strong>@member</strong> – “67% win rate since following. Bought the two-month package.”</div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="testi-card">
+              <img src="assets/testi/testi-genius.webp" alt="Member testimonial: group chat thinks I'm a genius" loading="lazy" decoding="async">
+              <div class="testi-meta"><strong>@member</strong> – “My group chat thinks I’m a genius now… just copy your slips.”</div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="testi-card">
+              <img src="assets/testi/testi-doubled.webp" alt="Member testimonial: doubled bankroll in two weeks" loading="lazy" decoding="async">
+              <div class="testi-meta"><strong>@member</strong> – “Doubled my bankroll in two weeks with y’all.”</div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="testi-card">
+              <img src="assets/testi/testi-unit-value.webp" alt="Member testimonial: raised unit value" loading="lazy" decoding="async">
+              <div class="testi-meta"><strong>@member</strong> – “Won so much I raised my unit value again.”</div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="testi-card">
+              <img src="assets/testi/testi-300-to-1000.webp" alt="Member testimonial: $300 to $1000" loading="lazy" decoding="async">
+              <div class="testi-meta"><strong>@member</strong> – “From $300 to over $1000 in a month following your picks.”</div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+
+    <div class="actions" style="margin-top:16px;">
+      <a class="btn btn-primary" href="https://www.winible.com/goodguysbets" target="_blank" rel="noopener">Join Now</a>
+      <a class="btn btn-discord" href="https://discord.gg/P3NjC9ZhtP" target="_blank" rel="noopener">Free Discord</a>
+      <a class="btn btn-ghost" href="community.html">More community →</a>
+    </div>
+  </div>
+</section>
+
+    </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>© <span id="year"></span> GoodGuyBets</div>
+      <div class="legal">For entertainment & educational purposes only. Not a sportsbook. Wager responsibly. 1-800-GAMBLER.</div>
+      <div class="footer-links">
+        <a href="legal.html">Terms</a> ·
+        <a href="legal.html#privacy">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="cookie-banner" id="cookieBanner" hidden>
+    <div class="cookie-inner">
+      <div class="cookie-text">
+        <strong>Cookies</strong><br>
+        We use cookies to improve your experience. You can accept or continue with essential only.
+      </div>
+      <div class="cookie-actions">
+        <button class="cookie-btn" id="cookieDecline" type="button">Essential only</button>
+        <button class="cookie-btn accept" id="cookieAccept" type="button">Accept</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    const autoplaySlow = { delay: 5000, disableOnInteraction: false };
+
+    new Swiper('#slips-swiper', {
+      loop:true,
+      spaceBetween:12,
+      autoplay: autoplaySlow,
+      breakpoints:{
+        0:{slidesPerView:1.12},
+        520:{slidesPerView:1.4},
+        800:{slidesPerView:2.2},
+        1100:{slidesPerView:3}
+      },
+      pagination:{el:'.swiper-pagination',clickable:true},
+      navigation:{ nextEl:'#slips-next', prevEl:'#slips-prev' }
+    });
+
+    new Swiper('#testi-swiper', {
+      loop:true,
+      spaceBetween:12,
+      autoplay: autoplaySlow,
+      breakpoints:{
+        0:{slidesPerView:1.12},
+        520:{slidesPerView:1.4},
+        800:{slidesPerView:2.2},
+        1100:{slidesPerView:3}
+      },
+      pagination:{el:'.swiper-pagination',clickable:true},
+      navigation:{ nextEl:'#testi-next', prevEl:'#testi-prev' }
+    });
+  </script>
+
+
+  </div>
+</body>
+</html>
