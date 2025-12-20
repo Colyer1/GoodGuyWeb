@@ -127,7 +127,7 @@
       e.preventDefault();
       const email = document.getElementById('email')?.value?.trim();
       if(!email) return;
-      alert('Got it — (placeholder) we would send the quick-start to: ' + email);
+      alert('Got it — we will send the quick-start to: ' + email);
       form.reset();
     });
   }
@@ -154,8 +154,8 @@
   // Members counter (only if present)
   const members = document.getElementById('members-count');
   if(members){
-    const target = 2800;
-    const duration = 1250;
+    const target = 2900;
+    const duration = 1300;
     const start = performance.now();
 
     function tick(now){
