@@ -58,6 +58,89 @@
     return n > 0 ? `+${n}` : `${n}`;
   }
 
+  // ---------- Mobile fix: American odds sign (+ / -) ----------
+  // iOS/Android numeric keypads often hide +/- when inputmode="numeric".
+  // We keep the number pad but add small +/- buttons next to American-odds inputs.
+  function enhanceAmericanOddsInputs(root) {
+    const scope = root || document;
+
+    const selectors = [
+      "#oddsAmerican",
+      "#kellyOdds",
+      "#evOdds",
+      "#hedgeOdds1",
+      "#hedgeOdds2",
+      "#nvA",
+      "#nvB",
+      ".legOdds"
+    ];
+
+    const inputs = Array.from(scope.querySelectorAll(selectors.join(",")))
+      .filter((el) => el && el.tagName === "INPUT");
+
+    inputs.forEach((input) => {
+      if (input.dataset.signEnhanced === "1") return;
+
+      // If it's already wrapped, just mark as enhanced
+      const parent = input.parentElement;
+      if (!parent) return;
+      if (parent.classList && parent.classList.contains("odds-with-sign")) {
+        input.dataset.signEnhanced = "1";
+        return;
+      }
+
+      const wrap = document.createElement("div");
+      wrap.className = "odds-with-sign";
+
+      const btnMinus = document.createElement("button");
+      btnMinus.type = "button";
+      btnMinus.className = "sign-btn sign-minus";
+      btnMinus.setAttribute("aria-label", "Set odds to negative");
+      btnMinus.textContent = "−";
+
+      const btnPlus = document.createElement("button");
+      btnPlus.type = "button";
+      btnPlus.className = "sign-btn sign-plus";
+      btnPlus.setAttribute("aria-label", "Set odds to positive");
+      btnPlus.textContent = "+";
+
+      // Swap input into wrapper in the same position
+      parent.insertBefore(wrap, input);
+      wrap.appendChild(btnMinus);
+      wrap.appendChild(input);
+      wrap.appendChild(btnPlus);
+
+      input.dataset.signEnhanced = "1";
+
+      function updateActive() {
+        const v = String(input.value || "").trim();
+        btnMinus.classList.toggle("active", v.startsWith("-"));
+        btnPlus.classList.toggle("active", v.startsWith("+"));
+      }
+
+      function normalizeSign(sign) {
+        const raw = String(input.value || "").trim();
+        const noSign = raw.replace(/^[\+\-]/, "");
+        input.value = (noSign ? (sign + noSign) : sign);
+
+        updateActive();
+        input.focus();
+        try {
+          const end = input.value.length;
+          input.setSelectionRange(end, end);
+        } catch (_) {}
+
+        // Trigger calculator recalcs
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+      }
+
+      btnMinus.addEventListener("click", () => normalizeSign("-"));
+      btnPlus.addEventListener("click", () => normalizeSign("+"));
+      input.addEventListener("input", updateActive);
+      updateActive();
+    });
+  }
+
   // ---------- Odds page (if you already have it) ----------
   function initOdds() {
     const aIn = $("oddsAmerican");
@@ -169,6 +252,8 @@
         compute();
       });
       row.querySelector(".legOdds").addEventListener("input", compute);
+      // Add +/- buttons for mobile numeric keyboards
+      enhanceAmericanOddsInputs(row);
       return row;
     }
 
@@ -221,6 +306,8 @@
       legsWrap.innerHTML = "";
       legsWrap.appendChild(makeLeg(1));
       legsWrap.appendChild(makeLeg(2));
+      // Ensure any newly created odds inputs get +/- buttons
+      enhanceAmericanOddsInputs(legsWrap);
       outA.textContent = "—";
       outD.textContent = "—";
       outProb.textContent = "—";
@@ -231,6 +318,7 @@
     addLeg.addEventListener("click", () => {
       const count = legsWrap.querySelectorAll(".leg").length;
       legsWrap.appendChild(makeLeg(count + 1));
+      enhanceAmericanOddsInputs(legsWrap);
       compute();
     });
 
@@ -449,6 +537,9 @@
 
   // ---------- Boot ----------
   const type = document.body && document.body.dataset ? document.body.dataset.calculator : null;
+
+  // Enable +/- buttons on American odds inputs (mobile numeric keyboard fix)
+  enhanceAmericanOddsInputs();
 
   // Always safe-init odds (only runs if IDs exist)
   initOdds();
