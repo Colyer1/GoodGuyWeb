@@ -3,29 +3,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>GoodGuyBets — FAQ</title>
-  <meta name="description" content="Frequently asked questions about GoodGuyBets and how to join." />
+  <title>GoodGuyBets — EV Calculator</title>
+  <meta name="description" content="Calculate expected value (EV) and ROI using odds and your win probability." />
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="GoodGuyBets — FAQ" />
-  <meta property="og:description" content="Frequently asked questions about GoodGuyBets and how to join." />
+  <meta property="og:title" content="GoodGuyBets — EV Calculator" />
+  <meta property="og:description" content="Calculate expected value (EV) and ROI using odds and your win probability." />
   <meta property="og:type" content="website" />
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
   <meta name="theme-color" content="#c31111" />
 
-  <!-- Favicons -->
   <link rel="icon" href="/assets/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="/assets/favicon.png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/calculators.css" />
 </head>
 
-<body>
+<body data-calculator="ev">
   <div class="page">
-
     <header class="nav">
       <div class="nav-inner">
         <a class="brand" href="/" aria-label="GoodGuyBets home">
@@ -38,54 +35,37 @@
         <nav class="nav-links" aria-label="Primary">
           <a data-nav href="/">Home</a>
           <a data-nav href="/proof/">Proof</a>
-          <a data-nav href="/calculators/">Community</a>
+          <a data-nav href="/calculators/">Calculators</a>
           <a data-nav href="/call/">Calls</a>
           <a data-nav href="/faq/">FAQ</a>
         </nav>
 
         <div class="nav-right">
           <a class="nav-cta" href="https://www.winible.com/goodguysbets" target="_blank" rel="noopener">Join Now</a>
-          <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" type="button">
+          <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M4 7h16v2H4V7zm0 8h16v2H4v-2zm0-4h16v2H4v-2z"/>
             </svg>
           </button>
         </div>
-        <div class="brand-name">GoodGuyBets</div>
-      </a>
-
-      <nav class="nav-links" aria-label="Primary">
-        <a data-nav href="/">Home</a>
-        <a data-nav href="/proof/">Proof</a>
-        <a data-nav href="/calculators/">Calculators</a>
-        <a data-nav href="/call/">Calls</a>
-        <a data-nav href="/faq/">FAQ</a>
-      </nav>
-
-      <div class="nav-right">
-        <a class="nav-cta" href="https://www.winible.com/goodguysbets" target="_blank" rel="noopener">Join Now</a>
-        <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M4 7h16v2H4V7zm0 8h16v2H4v-2zm0-4h16v2H4v-2z"/>
-          </svg>
-        </button>
       </div>
     </header>
 
-  <div class="mobile-drawer" id="drawer" aria-hidden="true">
-    <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Menu">
-      <div class="drawer-head">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div class="brand-logo" style="width:34px;height:34px;border-radius:10px;">
-            <img src="/assets/brand.jpg" alt="" class="brand-img" aria-hidden="true">
+    <div class="mobile-drawer" id="drawer" aria-hidden="true">
+      <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Menu">
+        <div class="drawer-head">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="brand-logo" style="width:34px;height:34px;border-radius:10px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#e6e6e6"><path d="M3 6h8v4H7v4h4v4H3V6zm10 0h8l-4 12h-8l4-12z"/></svg>
+            </div>
+            <strong>GoodGuyBets</strong>
           </div>
-          <button class="xbtn" id="drawerClose" aria-label="Close menu" type="button">
+          <button class="xbtn" id="drawerClose" aria-label="Close menu">
             <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true">
               <path d="M18.3 5.71 12 12l6.3 6.29-1.41 1.42L12 13.41l-6.89 6.3-1.42-1.41L10.59 12 3.69 5.71 5.11 4.29 12 10.59l6.89-6.3z"/>
             </svg>
           </button>
         </div>
-
         <div class="drawer-links">
           <a href="/" data-close-drawer>Home</a>
           <a href="/proof/" data-close-drawer>Proof</a>
@@ -94,7 +74,6 @@
           <a href="/faq/" data-close-drawer>FAQ</a>
           <a href="https://www.winible.com/goodguysbets" target="_blank" rel="noopener">Winible</a>
         </div>
-
         <div class="drawer-cta">
           <a class="btn btn-primary" href="https://www.winible.com/goodguysbets" target="_blank" rel="noopener">Claim Your Spot</a>
           <a class="btn btn-discord" href="https://discord.gg/P3NjC9ZhtP" target="_blank" rel="noopener">Join Free Discord</a>
@@ -104,7 +83,7 @@
 
     <div class="promo-bar">
       <div class="promo-inner">
-        <span class="promo-label">Limited Time</span>
+        <span class="promo-label">LIMITED TIME</span>
         <span class="promo-text">Receive our Platinum Package for just <strong>$1/day</strong></span>
         <span class="promo-countdown" id="promo-countdown">--d --h --m --s</span>
         <a href="https://www.winible.com/goodguysbets" target="_blank" rel="noopener" class="promo-cta">Claim Offer</a>
@@ -112,95 +91,104 @@
     </div>
 
     <main>
-
       <section class="page-head">
         <div class="container">
-          <div class="kicker reveal">Quick answers</div>
-          <h1 class="page-title reveal">FAQ</h1>
-          <p class="page-sub reveal">Everything you need to know before you join (and after you join).</p>
+          <div class="kicker reveal">calculator</div>
+          <h1 class="page-title reveal">EV Calculator</h1>
+          <p class="page-sub reveal">
+            Use your win probability and the posted odds to estimate <strong>expected value</strong> and <strong>ROI</strong>.
+          </p>
+          <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
+            <a class="btn btn-ghost" href="/calculators/">← All calculators</a>
+          </div>
         </div>
       </section>
 
-      <section class="section reveal">
-        <div class="container faq">
+      <section class="section calc-page">
+        <div class="container">
+          <div class="calc-panel">
+            <div class="calc-panel-head">
+              <div class="calc-panel-title">Expected value (EV)</div>
+              <div class="calc-panel-sub">Enter stake, American odds, and your win probability.</div>
+            </div>
 
-          <!-- MERGED + DEDUPED FAQ LIST -->
-          <div class="faq-item">
-            <button class="faq-q" type="button" aria-expanded="false">Do you give free picks?</button>
-            <div class="faq-a" hidden>
-              Yes — we share free picks so you can see our process first and make sure the way we bet fits how you like to play.
+            <div class="calc-panel-body">
+              <div class="calc-row">
+                <label for="evStake">Stake ($)</label>
+                <input id="evStake" type="text" inputmode="decimal" placeholder="100">
+              </div>
+
+              <div class="calc-row">
+                <label for="evOdds">American odds</label>
+                <input id="evOdds" type="text" inputmode="numeric" placeholder="+120 or -110">
+              </div>
+
+              <div class="calc-row">
+                <label for="evProb">Your win %</label>
+                <input id="evProb" type="text" inputmode="decimal" placeholder="55">
+              </div>
+
+              <div class="calc-actions">
+                <button class="btn btn-primary" id="evCalc">Calculate</button>
+                <button class="btn btn-ghost" id="evReset" type="button">Reset</button>
+              </div>
+
+              <div class="calc-result" id="evResult">
+                <div><strong>Win profit:</strong> <span id="evWinProfit">—</span></div>
+                <div style="margin-top:10px;"><strong>EV:</strong> <span id="evValue">—</span></div>
+                <div><strong>ROI:</strong> <span id="evRoi">—</span></div>
+              </div>
             </div>
           </div>
 
-          <div class="faq-item">
-            <button class="faq-q" type="button" aria-expanded="false">I’m new to sports betting — is this for me?</button>
-            <div class="faq-a" hidden>
-              Absolutely. We provide beginner-friendly education, bankroll guides, and simple step-by-step videos. You won’t be thrown into 12-leg lotto tickets with no context.
+          <div style="margin-top:18px;">
+            <div class="calc-panel">
+              <div class="calc-panel-head">
+                <div class="calc-panel-title">Why EV is the whole game</div>
+                <div class="calc-panel-sub">If you’re not thinking EV, you’re betting blind.</div>
+              </div>
+              <div class="calc-panel-body" style="line-height:1.65;opacity:.92;">
+                <p>
+                  EV tells you what you “should” win or lose on average over time based on your probability estimate.
+                  A bet can lose today and still be a great bet if the EV is positive.
+                </p>
+                <p>
+                  This is how sharp betting actually works:
+                </p>
+                <ul style="margin:10px 0 0 18px;">
+                  <li>Find edges (your probability higher than the market implies)</li>
+                  <li>Bet them consistently with solid sizing</li>
+                  <li>Let volume + math do the work</li>
+                </ul>
+
+                <div style="margin-top:14px;border-top:1px solid rgba(255,255,255,.08);padding-top:14px;">
+                  <div style="font-weight:900;text-transform:uppercase;font-size:12px;letter-spacing:.4px;opacity:.9;">Mini FAQ</div>
+                  <p style="margin-top:8px;"><strong>What’s a “good” ROI?</strong> Even 2–5% is strong long-term if it’s real.</p>
+                  <p><strong>Can my win% be wrong?</strong> Yes — be conservative. Overconfidence kills bankrolls.</p>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="faq-item">
-            <button class="faq-q" type="button" aria-expanded="false">How do I join?</button>
-            <div class="faq-a" hidden>
-              Click any “Join” or “Claim Your Spot” button, complete checkout on our Winible page, and you’ll receive instant access to our Discord, vault, and onboarding resources.
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-q" type="button" aria-expanded="false">Is this guaranteed profit?</button>
-            <div class="faq-a" hidden>
-              No. There is no such thing as risk-free betting. We can’t guarantee profit, but we can give you edges, process, and a community that treats this like a serious side income — not a get-rich-quick scheme.
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-q" type="button" aria-expanded="false">Are all picks tracked and verified?</button>
-            <div class="faq-a" hidden>
-              Yes. Every pick is logged and verified through Pickit to ensure full transparency.
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-q" type="button" aria-expanded="false">What bankroll do I need?</button>
-            <div class="faq-a" hidden>
-              Your bankroll can be small as long as you’re consistent with unit size. Most members start with a few hundred dollars and scale up as they gain confidence and results. Our bankroll guide in the Vault walks you through this.
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-q" type="button" aria-expanded="false">What if I can’t watch every game live?</button>
-            <div class="faq-a" hidden>
-              No problem. Plays are posted in Discord with units, books, and clear notes. You can tail on your own time — we don’t require you to sit in front of a TV all day.
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-q" type="button" aria-expanded="false">What sports and platforms do you cover?</button>
-            <div class="faq-a" hidden>
-              We cover major sports across popular sportsbooks and DFS apps.
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-q" type="button" aria-expanded="false">Why should I join instead of making my own picks?</button>
-            <div class="faq-a" hidden>
-              Anyone can make their own picks, but fewer than 2% of sports bettors are consistently profitable long-term. Members get access to the same picks and unit sizing we use ourselves — plus structure, education, and community support.
-            </div>
-          </div>
-
-          <div class="panel pad" style="margin-top:18px;">
-            <div class="kicker">Next steps</div>
-            <div class="actions" style="margin-top:10px;">
-              <a class="btn btn-primary" href="https://www.winible.com/goodguysbets" target="_blank" rel="noopener">Get Our Picks</a>
-              <a class="btn btn-discord" href="https://discord.gg/P3NjC9ZhtP" target="_blank" rel="noopener">Join The Discord</a>
-              <a class="btn btn-ghost" href="/proof/">See proof</a>
-              <a class="btn btn-ghost" href="/call/">Schedule a call</a>
+          <div style="margin-top:18px;">
+            <div class="calc-panel">
+              <div class="calc-panel-head">
+                <div class="calc-panel-title">Other calculators</div>
+                <div class="calc-panel-sub">Build your workflow.</div>
+              </div>
+              <div class="calc-panel-body" style="display:flex;gap:10px;flex-wrap:wrap;">
+                <a class="btn btn-ghost" href="/calculators/odds/">Odds</a>
+                <a class="btn btn-ghost" href="/calculators/novig/">No-Vig</a>
+                <a class="btn btn-ghost" href="/calculators/kelly/">Kelly</a>
+                <a class="btn btn-ghost" href="/calculators/parlay/">Parlay</a>
+                <a class="btn btn-ghost" href="/calculators/hedge/">Hedge</a>
+                <a class="btn btn-ghost" href="/calculators/unit/">Unit Size</a>
+              </div>
             </div>
           </div>
 
         </div>
       </section>
-
     </main>
 
     <footer class="site-footer">
@@ -260,22 +248,8 @@
       </div>
     </footer>
 
-    <div class="cookie-banner" id="cookieBanner" hidden>
-      <div class="cookie-inner">
-        <div class="cookie-text">
-          <strong>Cookies</strong><br>
-          We use cookies to improve your experience. You can accept or continue with essential only.
-        </div>
-        <div class="cookie-actions">
-          <button class="cookie-btn" id="cookieDecline" type="button">Essential only</button>
-          <button class="cookie-btn accept" id="cookieAccept" type="button">Accept</button>
-        </div>
-      </div>
-    </div>
-
     <script src="/js/app.js"></script>
-
+    <script src="/js/calculators-pages.js"></script>
   </div>
 </body>
 </html>
-

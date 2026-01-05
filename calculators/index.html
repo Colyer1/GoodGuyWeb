@@ -21,284 +21,152 @@
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/calculators.css" />
 
+  <!-- ✅ Offer popup CSS (smaller + not as wide) -->
   <style>
-    /* =========================
-       CALCULATORS PAGE UPGRADE
-       (safe: no global overrides)
-    ========================== */
+    .offer-popup {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 9999;
 
-    .calc-hero {
-      position: relative;
-      padding: 44px 0 26px;
-      overflow: hidden;
-    }
-    .calc-hero::before{
-      content:"";
-      position:absolute;
-      inset:-120px -120px auto -120px;
-      height: 260px;
-      background:
-        radial-gradient(closest-side, rgba(195,17,17,.22), transparent 72%),
-        radial-gradient(closest-side, rgba(195,17,17,.12), transparent 70%);
-      filter: blur(10px);
-      pointer-events:none;
-    }
-    .calc-hero .hero-inner{ position:relative; }
-    .calc-hero .h-1{ letter-spacing: .5px; }
-    .calc-hero .sub{ max-width: 740px; }
+      /* Smaller + less wide than proof page */
+      width: min(320px, calc(100vw - 24px));
 
-    .calc-shell{
-      padding: 18px 0 34px;
-    }
-
-    .calc-toolbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      flex-wrap:wrap;
-      margin: 10px 0 18px;
-    }
-
-    .calc-search{
-      flex: 1 1 320px;
-      min-width: 260px;
-      position: relative;
-    }
-
-    .calc-search input{
-      width: 100%;
-      padding: 12px 14px 12px 42px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      color: inherit;
-      outline: none;
-      transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
-    }
-    .calc-search input:focus{
-      border-color: rgba(195,17,17,.55);
-      box-shadow: 0 0 0 6px rgba(195,17,17,.10);
-      background: rgba(255,255,255,.06);
-    }
-    .calc-search .icon{
-      position:absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 18px;
-      height: 18px;
-      opacity: .85;
-      pointer-events:none;
-    }
-
-    .calc-chips{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    .chip{
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.03);
-      color: inherit;
-      padding: 9px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: .2px;
-      cursor: pointer;
-      user-select: none;
-      transition: transform .12s ease, border-color .12s ease, background .12s ease, box-shadow .12s ease;
-    }
-    .chip:hover{
-      transform: translateY(-1px);
-      border-color: rgba(255,255,255,.18);
-      background: rgba(255,255,255,.05);
-    }
-    .chip.active{
-      border-color: rgba(195,17,17,.55);
-      background: rgba(195,17,17,.10);
-      box-shadow: 0 0 0 6px rgba(195,17,17,.08);
-    }
-
-    .calc-grid{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
-    }
-
-    /* Cards become “modules” */
-    .calc-card{
-      grid-column: span 6;
+      border-radius: 16px;
       border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      border-radius: 18px;
-      overflow:hidden;
-      transition: transform .14s ease, border-color .14s ease, box-shadow .14s ease, background .14s ease;
-    }
-    .calc-card:hover{
-      transform: translateY(-2px);
-      border-color: rgba(195,17,17,.35);
-      background: rgba(255,255,255,.04);
-      box-shadow: 0 18px 44px rgba(0,0,0,.30), 0 0 0 7px rgba(195,17,17,.06);
+
+      background:
+        radial-gradient(120% 140% at 0% 0%,
+          rgba(195,17,17,.18) 0%,
+          rgba(0,0,0,0) 55%),
+        linear-gradient(180deg, rgba(18,18,18,.96), rgba(8,8,8,.94));
+
+      box-shadow: 0 18px 55px rgba(0,0,0,.62);
+      color: #f2f2f2;
+      overflow: hidden;
+
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .26s ease, transform .26s ease;
+      pointer-events: none;
     }
 
-    .calc-head{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap: 12px;
-      padding: 16px 16px 12px;
-      border-bottom: 1px solid rgba(255,255,255,.08);
-      background: linear-gradient(180deg, rgba(255,255,255,.04), transparent);
+    .offer-popup.ready {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
     }
 
-    .calc-title{
-      font-weight: 900;
-      font-size: 14px;
-      letter-spacing: .4px;
-      display:flex;
-      align-items:center;
+    /* Lift above cookie banner if present */
+    .offer-popup.lift { bottom: 112px; }
+
+    .offer-inner { padding: 12px 12px 10px; }
+
+    .offer-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
       gap: 10px;
-      text-transform: uppercase;
     }
 
-    .calc-icon{
+    .offer-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.75);
+      margin-bottom: 8px;
+    }
+
+    .offer-kicker::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--red-2, #c31111);
+      box-shadow: 0 0 0 4px rgba(195,17,17,.18);
+    }
+
+    .offer-close {
       width: 34px;
       height: 34px;
+      display: grid;
+      place-items: center;
       border-radius: 12px;
-      display:grid;
-      place-items:center;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      box-shadow: 0 10px 22px rgba(0,0,0,.25);
-      flex: 0 0 auto;
-    }
-    .calc-icon svg{
-      width: 18px; height: 18px; opacity:.95;
-    }
-
-    .calc-desc{
-      margin-top: 6px;
-      font-size: 12px;
-      opacity: .78;
-      line-height: 1.4;
-      max-width: 520px;
-    }
-
-    .calc-body{
-      padding: 14px 16px 16px;
-    }
-
-    .calc-row{
-      display:grid;
-      grid-template-columns: 120px 1fr;
-      align-items:center;
-      gap: 12px;
-      padding: 9px 0;
-    }
-    .calc-row label{
-      font-size: 12px;
-      font-weight: 800;
-      opacity: .88;
-    }
-    .calc-row input{
-      width: 100%;
-      border-radius: 12px;
-      padding: 11px 12px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      color: inherit;
-      outline:none;
-      transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
-    }
-    .calc-row input:focus{
-      border-color: rgba(195,17,17,.55);
-      box-shadow: 0 0 0 6px rgba(195,17,17,.10);
+      border: 1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.88);
+      cursor: pointer;
+      flex: 0 0 auto;
+      transition: background .12s ease, transform .12s ease;
     }
 
-    .calc-actions{
-      margin-top: 10px;
-      display:flex;
-      gap: 10px;
-      flex-wrap:wrap;
+    .offer-close:hover {
+      background: rgba(255,255,255,.10);
+      transform: scale(1.02);
     }
 
-    .calc-result{
-      margin-top: 12px;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
-      min-height: 46px;
-      font-size: 13px;
-      line-height: 1.35;
-      opacity: .92;
+    .offer-title {
+      font-weight: 950;
+      line-height: 1.03;
+      font-size: 22px;
+      margin: 0;
     }
+    .offer-title .free { color: var(--red-2, #c31111); }
 
-    .calc-legs{
-      margin-top: 8px;
-      display:flex;
-      flex-direction:column;
-      gap: 10px;
-    }
-
-    .calc-meta{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      flex-wrap:wrap;
-      margin-top: 14px;
-      opacity: .75;
+    .offer-sub {
+      margin-top: 7px;
       font-size: 12px;
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      white-space: nowrap;
-    }
-    .pill .dot{
-      width: 6px; height: 6px; border-radius: 99px;
-      background: rgba(195,17,17,.75);
-      box-shadow: 0 0 0 4px rgba(195,17,17,.12);
+      color: rgba(255,255,255,.72);
+      line-height: 1.25;
     }
 
-    .calc-cta{
-      margin-top: 18px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      padding: 16px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
-      flex-wrap:wrap;
-    }
-    .calc-cta strong{ letter-spacing: .2px; }
-    .calc-cta .mini{ font-size: 12px; opacity: .78; margin-top: 4px; max-width: 600px; }
+    .offer-btn {
+      margin-top: 10px;
+      width: 100%;
+      height: 42px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
 
-    @media (max-width: 980px){
-      .calc-card{ grid-column: span 12; }
-      .calc-row{ grid-template-columns: 1fr; gap: 6px; }
-      .calc-row label{ opacity: .75; }
+      text-decoration: none;
+      font-weight: 900;
+      font-size: 13px;
+      color: #fff;
+
+      background: linear-gradient(180deg, rgba(210,35,35,.98), rgba(155,12,12,.98));
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: 0 14px 30px rgba(195,17,17,.26);
+      transition: transform .12s ease, filter .12s ease;
+    }
+
+    .offer-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+    }
+
+    @media (max-width: 680px) {
+      .offer-popup {
+        right: 12px;
+        bottom: 12px;
+        width: min(300px, calc(100vw - 20px));
+      }
+      .offer-popup.lift { bottom: 150px; }
+      .offer-inner { padding: 11px 11px 9px; }
+      .offer-title { font-size: 20px; }
+      .offer-btn { height: 41px; font-size: 12.5px; }
     }
   </style>
 </head>
 
 <body data-calculators="1">
-
-
-
   <div class="page">
     <header class="nav">
       <div class="nav-inner">
@@ -328,14 +196,12 @@
       </div>
     </header>
 
-
-
     <div class="mobile-drawer" id="drawer" aria-hidden="true">
       <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Menu">
         <div class="drawer-head">
           <div style="display:flex;align-items:center;gap:10px;">
             <div class="brand-logo" style="width:34px;height:34px;border-radius:10px;">
-            <img src="/assets/brand.jpg" alt="" class="brand-img" aria-hidden="true">
+                 <img src="/assets/brand.jpg" alt="" class="brand-img" aria-hidden="true">
             </div>
             <strong>GoodGuyBets</strong>
           </div>
@@ -360,27 +226,55 @@
       </div>
     </div>
 
-      <div class="promo-bar">
-    <div class="promo-inner">
-      <span class="promo-label">LIMITED TIME</span>
-      <span class="promo-text">Receive our Platinum for just <strong>$1/day</strong></span>
-      <span class="promo-countdown" id="promo-countdown">--d --h --m --s</span>
-      <a href="https://www.winible.com/goodguysbets" target="_blank" rel="noopener" class="promo-cta">Claim Offer</a>
+    <div class="promo-bar">
+      <div class="promo-inner">
+        <span class="promo-label">LIMITED TIME</span>
+        <span class="promo-text">Receive our Platinum Package for just <strong>$1/day</strong></span>
+        <span class="promo-countdown" id="promo-countdown">--d --h --m --s</span>
+        <a href="https://www.winible.com/goodguysbets" target="_blank" rel="noopener" class="promo-cta">Claim Offer</a>
+      </div>
     </div>
-  </div>
+
+    <!-- ✅ Offer popup -->
+    <aside class="offer-popup" id="offerPopup" aria-label="Promotion">
+      <div class="offer-inner">
+        <div class="offer-top">
+          <div>
+            <div class="offer-kicker">Limited Time</div>
+            <h3 class="offer-title">Want <span class="free">Free Months</span> inside our VIP group?</h3>
+            <div class="offer-sub">Quick 30-second form — see if you qualify.</div>
+          </div>
+
+          <button class="offer-close" id="offerClose" type="button" aria-label="Dismiss offer">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="currentColor">
+              <path d="M18.3 5.71 12 12l6.3 6.29-1.41 1.42L12 13.41l-6.89 6.3-1.42-1.41L10.59 12 3.69 5.71 5.11 4.29 12 10.59l6.89-6.3z"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- IMPORTANT: replace YOUR_GOOGLE_DOC_URL -->
+        <a class="offer-btn" href="YOUR_GOOGLE_DOC_URL" target="_blank" rel="noopener">
+          Claim Up To 6 Months Free →
+        </a>
+      </div>
+    </aside>
 
     <main>
-      <section class="hero calc-hero">
-        <div class="container hero-inner">
-          <div class="kicker hero-kicker">TOOLS • UNIT SIZING • PROBABILITY</div>
-          <h1 class="h-1">BETTING CALCULATORS</h1>
-          <p class="sub">Fast, clean tools to help you size bets, understand odds, and make smarter decisions. (For educational purposes only.)</p>
+      <section class="page-head">
+        <div class="container">
+          <div class="kicker">tools</div>
+          <h1 class="page-title">Calculators</h1>
+          <p class="page-sub">
+            Free, fast tools for unit sizing, parlays, EV, hedging, and more
+          </p>
 
-          <div class="calc-meta">
-            <span class="pill"><span class="dot"></span> Odds & Probability</span>
-            <span class="pill"><span class="dot"></span> Unit Sizing</span>
-            <span class="pill"><span class="dot"></span> EV / Hedge</span>
-            <span class="pill"><span class="dot"></span> No-Vig</span>
+          <div class="panel pad" style="margin-top:14px;">
+            <div style="font-weight:800;letter-spacing:.08em;font-size:12px;opacity:.75;text-transform:uppercase;">
+              How to use
+            </div>
+            <div style="margin-top:8px;font-size:13px;opacity:.85;line-height:1.45;">
+              Pick a calculator below, click <strong>Learn more</strong> to explore that calculator
+            </div>
           </div>
         </div>
       </section>
@@ -388,30 +282,18 @@
       <section class="section calc-shell">
         <div class="container">
 
-          <!-- Toolbar -->
           <div class="calc-toolbar">
             <div class="calc-search">
               <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
                 <path fill="currentColor" d="M10 4a6 6 0 1 1 0 12A6 6 0 0 1 10 4Zm0-2a8 8 0 1 0 4.9 14.3l4.4 4.4 1.4-1.4-4.4-4.4A8 8 0 0 0 10 2Z"/>
               </svg>
-              <input id="calcSearch" type="text" placeholder="Search calculators (ex: odds, kelly, hedge, parlay)…" autocomplete="off">
-            </div>
-
-            <div class="calc-chips" role="tablist" aria-label="Calculator categories">
-              <button class="chip active" type="button" data-filter="all">All</button>
-              <button class="chip" type="button" data-filter="odds">Odds</button>
-              <button class="chip" type="button" data-filter="sizing">Sizing</button>
-              <button class="chip" type="button" data-filter="parlays">Parlays</button>
-              <button class="chip" type="button" data-filter="market">Market</button>
-              <button class="chip" type="button" data-filter="risk">Risk</button>
+              <input id="calcSearch" type="text" placeholder="Search calculators (odds, parlay, kelly, hedge…)">
             </div>
           </div>
 
-          <!-- Grid -->
           <div class="calc-grid" id="calcGrid">
 
-            <!-- Odds Converter -->
-            <div class="calc-card" data-tags="odds market" data-title="Odds Converter">
+            <div class="calc-card" data-title="Odds Converter" data-tags="odds probability">
               <div class="calc-head">
                 <div>
                   <div class="calc-title">
@@ -420,50 +302,42 @@
                     </span>
                     Odds Converter
                   </div>
-                  <div class="calc-desc">Convert American ↔ Decimal and instantly see implied probability.</div>
+                  <div class="calc-desc">Convert American ↔ Decimal and see implied probability instantly.</div>
                 </div>
               </div>
               <div class="calc-body">
-                <div class="calc-row">
-                  <label for="oc_american">American</label>
-                  <input id="oc_american" type="text" inputmode="numeric" placeholder="+150 or -120" value="+150">
+                <div style="opacity:.75;font-size:12px;line-height:1.45">
+                  Great for quick sanity checks before you place a bet.
                 </div>
-                <div class="calc-row">
-                  <label for="oc_decimal">Decimal</label>
-                  <input id="oc_decimal" type="text" inputmode="decimal" placeholder="2.50">
+                <div class="calc-open">
+                  <a class="btn btn-primary" href="/calculators/odds/">Learn more</a>
                 </div>
-                <div class="calc-result" id="oc_result"></div>
               </div>
             </div>
 
-            <!-- Unit Sizing -->
-            <div class="calc-card" data-tags="sizing risk" data-title="Unit Size">
+            <div class="calc-card" data-title="Unit Size" data-tags="bankroll sizing units">
               <div class="calc-head">
                 <div>
                   <div class="calc-title">
                     <span class="calc-icon" aria-hidden="true">
-                      <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 2 7v10l10 5 10-5V7L12 2Zm0 2.2 7.7 3.9-7.7 3.9-7.7-3.9L12 4.2Zm-8 6.2 8 4 8-4v6.2l-8 4-8-4V10.4Z"/></svg>
+                      <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 2 7v10l10 5 10-5V7L12 2Z"/></svg>
                     </span>
                     Unit Size
                   </div>
-                  <div class="calc-desc">Get a clean 1u size from bankroll + your unit percentage.</div>
+                  <div class="calc-desc">Calculate 1u based on bankroll + unit percentage.</div>
                 </div>
               </div>
               <div class="calc-body">
-                <div class="calc-row">
-                  <label for="us_bankroll">Bankroll</label>
-                  <input id="us_bankroll" type="text" inputmode="decimal" placeholder="1000" value="1000">
+                <div style="opacity:.75;font-size:12px;line-height:1.45">
+                  Keeps bet sizing consistent and protects you from variance.
                 </div>
-                <div class="calc-row">
-                  <label for="us_pct">Unit %</label>
-                  <input id="us_pct" type="text" inputmode="decimal" placeholder="1" value="1">
+                <div class="calc-open">
+                  <a class="btn btn-primary" href="/calculators/unit/">Learn more</a>
                 </div>
-                <div class="calc-result" id="us_result"></div>
               </div>
             </div>
 
-            <!-- Parlay -->
-            <div class="calc-card" data-tags="parlays odds" data-title="Parlay Builder">
+            <div class="calc-card" data-title="Parlay Builder" data-tags="parlay legs odds payout">
               <div class="calc-head">
                 <div>
                   <div class="calc-title">
@@ -472,27 +346,20 @@
                     </span>
                     Parlay Builder
                   </div>
-                  <div class="calc-desc">Add legs (+/- odds), enter stake, and get combined odds + payout.</div>
+                  <div class="calc-desc">Add legs and get combined odds + payout.</div>
                 </div>
               </div>
               <div class="calc-body">
-                <div class="calc-row">
-                  <label for="parlay_stake">Stake</label>
-                  <input id="parlay_stake" type="text" inputmode="decimal" placeholder="25" value="25">
+                <div style="opacity:.75;font-size:12px;line-height:1.45">
+                  Useful for quickly checking payout + implied probability.
                 </div>
-
-                <div class="calc-legs" id="parlay_legs"></div>
-
-                <div class="calc-actions">
-                  <button class="btn btn-ghost" type="button" id="parlay_add">+ Add Leg</button>
+                <div class="calc-open">
+                  <a class="btn btn-primary" href="/calculators/parlay/">Learn more</a>
                 </div>
-
-                <div class="calc-result" id="parlay_result"></div>
               </div>
             </div>
 
-            <!-- Kelly -->
-            <div class="calc-card" data-tags="sizing risk" data-title="Kelly Criterion">
+            <div class="calc-card" data-title="Kelly Criterion" data-tags="kelly sizing edge">
               <div class="calc-head">
                 <div>
                   <div class="calc-title">
@@ -501,32 +368,20 @@
                     </span>
                     Kelly Criterion
                   </div>
-                  <div class="calc-desc">Estimate stake sizing from your edge (win % + odds). Includes fractional Kelly.</div>
+                  <div class="calc-desc">Estimate sizing from your edge using fractional Kelly.</div>
                 </div>
               </div>
               <div class="calc-body">
-                <div class="calc-row">
-                  <label for="k_bankroll">Bankroll</label>
-                  <input id="k_bankroll" type="text" inputmode="decimal" placeholder="1000" value="1000">
+                <div style="opacity:.75;font-size:12px;line-height:1.45">
+                  Strong tool — but keep it fractional to manage variance.
                 </div>
-                <div class="calc-row">
-                  <label for="k_odds">Odds (American)</label>
-                  <input id="k_odds" type="text" inputmode="numeric" placeholder="-110" value="-110">
+                <div class="calc-open">
+                  <a class="btn btn-primary" href="/calculators/kelly/">Learn more</a>
                 </div>
-                <div class="calc-row">
-                  <label for="k_prob">Win %</label>
-                  <input id="k_prob" type="text" inputmode="decimal" placeholder="55" value="55">
-                </div>
-                <div class="calc-row">
-                  <label for="k_frac">Kelly %</label>
-                  <input id="k_frac" type="text" inputmode="decimal" placeholder="25" value="25">
-                </div>
-                <div class="calc-result" id="k_result"></div>
               </div>
             </div>
 
-            <!-- No-Vig -->
-            <div class="calc-card" data-tags="market odds" data-title="No-Vig Odds">
+            <div class="calc-card" data-title="No-Vig Odds" data-tags="vig no-vig fair odds">
               <div class="calc-head">
                 <div>
                   <div class="calc-title">
@@ -535,98 +390,70 @@
                     </span>
                     No-Vig Odds
                   </div>
-                  <div class="calc-desc">Remove vig from a two-way market to estimate fair implied probabilities.</div>
+                  <div class="calc-desc">Remove vig from a 2-way market and estimate fair odds.</div>
                 </div>
               </div>
               <div class="calc-body">
-                <div class="calc-row">
-                  <label for="vig_a1">Side A Odds</label>
-                  <input id="vig_a1" type="text" inputmode="numeric" placeholder="-110" value="-110">
+                <div style="opacity:.75;font-size:12px;line-height:1.45">
+                  Helps identify books shading one side too far.
                 </div>
-                <div class="calc-row">
-                  <label for="vig_a2">Side B Odds</label>
-                  <input id="vig_a2" type="text" inputmode="numeric" placeholder="-110" value="-110">
+                <div class="calc-open">
+                  <a class="btn btn-primary" href="/calculators/novig/">Learn more</a>
                 </div>
-                <div class="calc-result" id="vig_result"></div>
               </div>
             </div>
 
-            <!-- Hedge -->
-            <div class="calc-card" data-tags="risk market" data-title="Hedge Calculator">
+            <div class="calc-card" data-title="Hedge Calculator" data-tags="hedge cashout risk">
               <div class="calc-head">
                 <div>
                   <div class="calc-title">
                     <span class="calc-icon" aria-hidden="true">
-                      <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 4 6v6c0 5 3.4 9.7 8 10 4.6-.3 8-5 8-10V6l-8-4Zm0 18c-3.3-.5-6-4.2-6-8V7.2l6-3 6 3V12c0 3.8-2.7 7.5-6 8Z"/></svg>
+                      <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 4 6v6c0 5 3.4 9.7 8 10 4.6-.3 8-5 8-10V6l-8-4Z"/></svg>
                     </span>
                     Hedge Calculator
                   </div>
-                  <div class="calc-desc">Hedge an existing bet to equalize profit on both outcomes.</div>
+                  <div class="calc-desc">Find hedge stake to equalize profit across outcomes.</div>
                 </div>
               </div>
               <div class="calc-body">
-                <div class="calc-row">
-                  <label for="h_stakeA">Original Stake</label>
-                  <input id="h_stakeA" type="text" inputmode="decimal" placeholder="100" value="100">
+                <div style="opacity:.75;font-size:12px;line-height:1.45">
+                  Great for live spots and protecting a big position.
                 </div>
-                <div class="calc-row">
-                  <label for="h_oddsA">Original Odds</label>
-                  <input id="h_oddsA" type="text" inputmode="numeric" placeholder="+150" value="+150">
+                <div class="calc-open">
+                  <a class="btn btn-primary" href="/calculators/hedge/">Learn more</a>
                 </div>
-                <div class="calc-row">
-                  <label for="h_oddsB">Hedge Odds</label>
-                  <input id="h_oddsB" type="text" inputmode="numeric" placeholder="-160" value="-160">
-                </div>
-                <div class="calc-result" id="h_result"></div>
               </div>
             </div>
 
-            <!-- EV -->
-            <div class="calc-card" data-tags="risk odds" data-title="Expected Value (EV)">
+            <div class="calc-card" data-title="Expected Value" data-tags="ev roi probability edge">
               <div class="calc-head">
                 <div>
                   <div class="calc-title">
                     <span class="calc-icon" aria-hidden="true">
                       <svg viewBox="0 0 24 24"><path fill="currentColor" d="M3 17h3v-7H3v7Zm5 0h3V7H8v10Zm5 0h3v-4h-3v4Zm5 0h3V4h-3v13Z"/></svg>
                     </span>
-                    Expected Value (EV)
+                    EV (Expected Value)
                   </div>
-                  <div class="calc-desc">Estimate EV & ROI given odds + your win probability.</div>
+                  <div class="calc-desc">Estimate EV + ROI based on odds and your probability.</div>
                 </div>
               </div>
               <div class="calc-body">
-                <div class="calc-row">
-                  <label for="ev_stake">Stake</label>
-                  <input id="ev_stake" type="text" inputmode="decimal" placeholder="50" value="50">
+                <div style="opacity:.75;font-size:12px;line-height:1.45">
+                  Helps you stop betting “vibes” and start betting edges.
                 </div>
-                <div class="calc-row">
-                  <label for="ev_odds">Odds (American)</label>
-                  <input id="ev_odds" type="text" inputmode="numeric" placeholder="+120" value="+120">
+                <div class="calc-open">
+                  <a class="btn btn-primary" href="/calculators/ev/">Learn more</a>
                 </div>
-                <div class="calc-row">
-                  <label for="ev_prob">Win %</label>
-                  <input id="ev_prob" type="text" inputmode="decimal" placeholder="48" value="48">
-                </div>
-                <div class="calc-result" id="ev_result"></div>
               </div>
             </div>
 
-          </div>
-
-          <!-- Simple CTA (not spammy) -->
-          <div class="calc-cta">
-            <div>
-              <strong>Want verified results behind the picks?</strong>
-              <div class="mini">See the track record and how everything is logged and verified through Pickit.</div>
-            </div>
-            <a class="btn btn-ghost" href="/proof/">View Track Record →</a>
           </div>
 
         </div>
       </section>
     </main>
 
-    <!-- keep your existing footer as-is -->
+    <!-- ✅ Restored footer social icons -->
     <footer class="site-footer">
       <div class="footer-inner">
         <div class="footer-top">
@@ -637,28 +464,24 @@
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path fill="currentColor" d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm9 2h-9A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9A3.5 3.5 0 0 0 20 16.5v-9A3.5 3.5 0 0 0 16.5 4ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm5.75-2.15a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0Z"/>
               </svg>
-              <span>IG</span>
             </a>
 
             <a class="social" href="https://discord.gg/P3NjC9ZhtP" target="_blank" rel="noopener" aria-label="Discord">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path fill="currentColor" d="M19.5 5.3A15.3 15.3 0 0 0 15.7 4l-.2.4a13.9 13.9 0 0 1 3.1 1.6 11.6 11.6 0 0 0-4-1.2 12.6 12.6 0 0 0-5.2 0 11.6 11.6 0 0 0-4 1.2 13.9 13.9 0 0 1 3.1-1.6L8.3 4A15.3 15.3 0 0 0 4.5 5.3C2.7 8 2.1 10.7 2.3 13.3c1.2 1.8 2.9 3.2 4.9 4.1l.6-.8c-.7-.3-1.4-.7-2-1.2l.5-.4c1.2.9 2.6 1.5 4 1.7a13.1 13.1 0 0 0 3.4 0c1.4-.2 2.8-.8 4-1.7l.5.4c-.6.5-1.3.9-2 1.2l.6.8c2-.9 3.7-2.3 4.9-4.1.2-2.6-.4-5.3-2.2-8ZM9.1 12.8c-.7 0-1.3-.7-1.3-1.5s.6-1.5 1.3-1.5 1.3.7 1.3 1.5-.6 1.5-1.3 1.5Zm5.8 0c-.7 0-1.3-.7-1.3-1.5s.6-1.5 1.3-1.5 1.3.7 1.3 1.5-.6 1.5-1.3 1.5Z"/>
               </svg>
-              <span>DC</span>
             </a>
 
             <a class="social" href="https://www.threads.com/@goodguysbets" target="_blank" rel="noopener" aria-label="Threads">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm4.73 14.18c-.54 1.18-1.88 2.12-3.58 2.12-2.05 0-3.65-1.25-3.65-3.25 0-1.72 1.2-2.87 3.12-3.09.77-.09 1.62.02 2.41.29-.18-.94-.76-1.56-1.73-1.87-1.12-.36-2.5-.23-3.77.35l-.63-1.38c1.58-.74 3.35-.9 4.9-.4 1.62.52 2.61 1.65 2.79 3.19.07.59.07 1.23-.01 1.88.47.38.86.87 1.05 1.47.19.58.15 1.2-.1 1.79Zm-2.35-1.64c-.57-.3-1.3-.45-2.07-.36-.9.1-1.46.55-1.46 1.32 0 .85.78 1.39 1.9 1.39 1.19 0 2.08-.72 2.26-1.55.1-.44.05-.64-.12-.8-.12-.12-.28-.23-.51-.4Z"/>
               </svg>
-              <span>TH</span>
             </a>
 
             <a class="social" href="https://www.youtube.com/@GoodGuysBets" target="_blank" rel="noopener" aria-label="YouTube">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path fill="currentColor" d="M21.6 7.2a3 3 0 0 0-2.1-2.12C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.48A3 3 0 0 0 2.4 7.2 31.3 31.3 0 0 0 2 12a31.3 31.3 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.12c1.8.48 7.5.48 7.5.48s5.7 0 7.5-.48a3 3 0 0 0 2.1-2.12A31.3 31.3 0 0 0 22 12a31.3 31.3 0 0 0-.4-4.8ZM10 15.5v-7l6 3.5-6 3.5Z"/>
               </svg>
-              <span>YT</span>
             </a>
           </div>
 
@@ -670,52 +493,53 @@
         </div>
 
         <div class="footer-legal">
-          Powered by Winible • For entertainment &amp; educational purposes only. Not a sportsbook. Wager responsibly. 1-800-GAMBLER.
+          <div>© 2026 FOURU MGMT, Inc.</div>
+          <div>
+            FOURU MGMT, Inc. is not a sportsbook and does not place wagers on behalf of others. All content is provided for informational and educational purposes only and should not be considered financial or investment advice. Past performance does not guarantee future results. Betting involves risk.
+          </div>
+          <div style="margin-top:10px;">
+            <strong>Affiliate Disclosure:</strong> FOURU MGMT, Inc. may receive compensation from partner sportsbooks.
+          </div>
+          <div style="margin-top:10px;">
+            <strong>Responsible Gambling:</strong> Call <a href="tel:1800426537">1-800-GAMBLER</a> for help.
+          </div>
         </div>
       </div>
     </footer>
+
+    <script src="/js/app.js"></script>
+    <script src="/js/calculators-pages.js"></script>
+
+    <!-- ✅ Offer popup JS -->
+    <script>
+      (function initOfferPopup() {
+        const offer = document.getElementById('offerPopup');
+        const closeBtn = document.getElementById('offerClose');
+        const cookieBanner = document.getElementById('cookieBanner'); // if your app.js uses this
+
+        if (!offer) return;
+
+        const show = () => offer.classList.add('ready');
+        if (document.readyState === 'complete') setTimeout(show, 220);
+        else window.addEventListener('load', () => setTimeout(show, 220));
+
+        if (closeBtn) closeBtn.addEventListener('click', () => (offer.style.display = 'none'));
+
+        const updateLift = () => {
+          if (cookieBanner && cookieBanner.hidden === false) offer.classList.add('lift');
+          else offer.classList.remove('lift');
+        };
+
+        updateLift();
+        window.addEventListener('resize', updateLift);
+
+        if (cookieBanner) {
+          const obs = new MutationObserver(updateLift);
+          obs.observe(cookieBanner, { attributes: true, attributeFilter: ['hidden'] });
+        }
+      })();
+    </script>
+
   </div>
-
-  <script src="/js/app.js"></script>
-
-  <!-- Small, safe filter JS (does NOT touch your calculators logic) -->
-  <script>
-    (function(){
-      const search = document.getElementById('calcSearch');
-      const grid = document.getElementById('calcGrid');
-      if(!search || !grid) return;
-
-      const chips = Array.from(document.querySelectorAll('.chip[data-filter]'));
-      const cards = Array.from(grid.querySelectorAll('.calc-card'));
-
-      let activeFilter = 'all';
-
-      function applyFilters(){
-        const q = (search.value || '').trim().toLowerCase();
-
-        cards.forEach(card => {
-          const title = (card.getAttribute('data-title') || '').toLowerCase();
-          const tags = (card.getAttribute('data-tags') || '').toLowerCase();
-
-          const matchesText = !q || title.includes(q) || tags.includes(q);
-          const matchesFilter = (activeFilter === 'all') || tags.split(/\s+/).includes(activeFilter);
-
-          card.style.display = (matchesText && matchesFilter) ? '' : 'none';
-        });
-      }
-
-      chips.forEach(chip => {
-        chip.addEventListener('click', () => {
-          chips.forEach(c => c.classList.remove('active'));
-          chip.classList.add('active');
-          activeFilter = chip.getAttribute('data-filter') || 'all';
-          applyFilters();
-        });
-      });
-
-      search.addEventListener('input', applyFilters);
-      applyFilters();
-    })();
-  </script>
 </body>
 </html>

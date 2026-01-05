@@ -21,6 +21,172 @@
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 
   <link rel="stylesheet" href="/css/style.css" />
+
+  <!-- =========================================
+       FLOATING VIP OFFER (SUBTLE + RELOADS)
+       ========================================= -->
+  <style>
+    .float-offer {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 9999;
+      width: min(340px, calc(100vw - 32px));
+      pointer-events: none;
+    }
+
+    .float-offer .offer-card {
+      pointer-events: auto;
+      background: rgba(10, 10, 12, .92);
+      border-radius: 16px;
+      padding: 16px 16px 14px;
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow:
+        0 18px 55px rgba(0,0,0,.65),
+        0 0 0 1px rgba(195, 17, 17, .20) inset,
+        0 0 32px rgba(195, 17, 17, .18);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      overflow: hidden;
+
+      /* subtle "present" not poppy */
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .25s ease, transform .25s ease;
+    }
+    .float-offer.ready .offer-card {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .float-offer .offer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .14em;
+      color: rgba(255,255,255,.75);
+      text-transform: uppercase;
+    }
+    .float-offer .offer-badge i {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(195, 17, 17, .95);
+      box-shadow: 0 0 18px rgba(195,17,17,.65);
+      display: inline-block;
+    }
+
+    .float-offer .offer-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .float-offer .offer-title {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      font-weight: 900;
+      color: #fff;
+    }
+    .float-offer .offer-title span {
+      color: var(--red-2, #c31111);
+    }
+
+    .float-offer .offer-sub {
+      margin: 8px 0 12px;
+      font-size: 12px;
+      color: rgba(255,255,255,.72);
+      font-weight: 600;
+    }
+
+    .float-offer .offer-btn {
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-decoration: none;
+      background: linear-gradient(180deg, rgba(225, 28, 28, 1), rgba(165, 12, 12, 1));
+      color: #fff;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-weight: 900;
+      font-size: 16px;
+      letter-spacing: -0.01em;
+      box-shadow: 0 12px 30px rgba(195,17,17,.22);
+      border: 1px solid rgba(255,255,255,.10);
+      transition: transform .12s ease, filter .12s ease;
+      user-select: none;
+    }
+
+    .float-offer .offer-btn:hover {
+      filter: brightness(1.03);
+      transform: translateY(-1px);
+    }
+
+    .float-offer .offer-btn:active {
+      transform: translateY(0);
+    }
+
+    .float-offer .offer-close {
+      appearance: none;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.85);
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      flex: 0 0 auto;
+    }
+
+    .float-offer .offer-close:hover {
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.16);
+      transform: scale(1.03);
+    }
+
+    .float-offer .offer-close:active {
+      transform: scale(.98);
+    }
+
+    .float-offer .offer-arrow {
+      opacity: .95;
+      font-weight: 900;
+    }
+
+    /* Mobile: bottom center, slightly wider */
+    @media (max-width: 680px) {
+      .float-offer {
+        left: 14px;
+        right: 14px;
+        bottom: 14px;
+        width: auto;
+      }
+      .float-offer .offer-title { font-size: 18px; }
+      .float-offer .offer-btn { font-size: 15px; }
+    }
+
+    /* Lift above cookie banner */
+    .float-offer.lift {
+      bottom: 118px;
+    }
+    @media (max-width: 680px) {
+      .float-offer.lift {
+        bottom: 150px;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -96,6 +262,16 @@
     </div>
   </div>
 
+    <!-- 1) Top Promo Banner (thin) -->
+    <div class="promo-bar">
+      <div class="promo-inner">
+        <span class="promo-label">LIMITED TIME</span>
+        <span class="promo-text">Receive our <strong>Platinum Package</strong>  for just <strong>$1/day</strong></span>
+        <span class="promo-countdown" id="promo-countdown">--d --h --m --s</span>
+        <a href="https://www.winible.com/goodguysbets" target="_blank" rel="noopener" class="promo-cta">Claim Offer</a>
+      </div>
+    </div>
+
     <main>
       <!-- 2) Hero -->
       <section class="hero">
@@ -108,19 +284,14 @@
 
           <div class="grid-2" style="margin-top:14px;">
             <div class="reveal">
-              <!-- Headline: keep exactly -->
               <h1 class="h-1">TRANSPARENT PICKS.<br><span style="color:var(--red-2);">REAL RESULTS.</span></h1>
-
-              <!-- Subheadline: replace -->
               <p class="sub">A disciplined betting community built on verified results — not hype.</p>
 
-              <!-- CTAs: only 2 -->
               <div class="actions" style="margin-top:18px;">
                 <a class="btn btn-primary" href="/proof/">View Track Record</a>
                 <a class="btn btn-ghost" href="https://discord.gg/P3NjC9ZhtP" target="_blank" rel="noopener">Join the Community →</a>
               </div>
 
-              <!-- Feature bullets: replace entire block -->
               <div class="section tight" style="margin-top:18px;">
                 <div class="bullets">
                   <div class="bullet">
@@ -150,7 +321,6 @@
               </div>
             </div>
 
-            <!-- Right column: keep video card, just reduce CTAs inside -->
             <div class="reveal">
               <div class="proof-card" role="region" aria-label="How it works video">
                 <div class="proof-head">
@@ -181,10 +351,9 @@
             </div>
           </div>
 
-          <!-- 3) Stats bar (wording updates + extra spacing) -->
           <div class="section reveal" style="margin-top:34px;margin-bottom:34px;">
             <div class="stats" style="padding-top:18px;padding-bottom:18px;">
-              <div class="stat"><h3>1,000+</h3><p>Winning slips posted</p></div>
+              <div class="stat"><h3>2,500+</h3><p>Winning slips posted</p></div>
               <div class="stat"><h3>4.7★</h3><p>Average member rating</p></div>
               <div class="stat"><h3 id="members-count">6,300+</h3><p>Active members</p></div>
               <div class="stat"><h3>24/7</h3><p>Active community</p></div>
@@ -193,7 +362,6 @@
         </div>
       </section>
 
-      <!-- 4) Built Like a Business section -->
       <section class="section reveal">
         <div class="container panel pad">
           <div class="grid-2">
@@ -205,7 +373,6 @@
                 We don’t promise overnight success. What we do provide is the same structure, unit sizing, and picks we’ve relied on over multiple years — a process that has produced over $500,000 in tracked profits during the last three years.
               </p>
 
-              <!-- CTAs: only 2 -->
               <div class="actions" style="margin-top:16px;">
                 <a class="btn btn-primary" href="/proof/">Explore Verified Proof</a>
                 <a class="btn btn-ghost" href="https://discord.gg/P3NjC9ZhtP" target="_blank" rel="noopener">See the Community →</a>
@@ -241,7 +408,6 @@
         </div>
       </section>
 
-      <!-- Everything below removed and replaced with FAQ -->
       <section class="section reveal">
         <div class="container">
           <div class="kicker">FAQ</div>
@@ -266,8 +432,8 @@
             </div>
 
             <div class="faq-item">
-              <button class="faq-q" type="button" aria-expanded="false">What if I can’t watch games live?</button>
-              <div class="faq-a" hidden>You don’t need to watch games live. Picks are posted ahead of time.</div>
+              <button class="faq-q" type="button" aria-expanded="false">What sports and platforms do you cover?</button>
+              <div class="faq-a" hidden>We cover major sports across popular sportsbooks and DFS apps.</div>
             </div>
 
             <div class="faq-item">
@@ -278,15 +444,15 @@
             </div>
 
             <div class="faq-item">
-              <button class="faq-q" type="button" aria-expanded="false">What sports and platforms do you cover?</button>
-              <div class="faq-a" hidden>We cover major sports across popular sportsbooks and DFS apps.</div>
-            </div>
-
-            <div class="faq-item">
               <button class="faq-q" type="button" aria-expanded="false">Is this for beginners or experienced bettors?</button>
               <div class="faq-a" hidden>
                 Both. Beginners learn structure, unit sizing, and how to approach sports betting responsibly, while experienced bettors gain access to our system and receive the same picks we follow ourselves.
               </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-q" type="button" aria-expanded="false">What if I can’t watch games live?</button>
+              <div class="faq-a" hidden>You don’t need to watch games live. Picks are posted ahead of time.</div>
             </div>
 
             <div class="faq-item">
@@ -296,59 +462,63 @@
               </div>
             </div>
           </div>
+
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">© <span id="year"></span> GoodGuyBets</div>
+      <div class="footer-inner">
+        <div class="footer-top">
+          <div class="footer-brand">© <span id="year"></span> GoodGuyBets</div>
 
-      <div class="footer-social">
-        <a class="social" href="https://www.instagram.com/goodguysbets" target="_blank" rel="noopener" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path fill="currentColor" d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm9 2h-9A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9A3.5 3.5 0 0 0 20 16.5v-9A3.5 3.5 0 0 0 16.5 4ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm5.75-2.15a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0Z"/>
-          </svg>
-          <span>IG</span>
-        </a>
+          <div class="footer-social">
+            <a class="social" href="https://www.instagram.com/goodguysbets" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm9 2h-9A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9A3.5 3.5 0 0 0 20 16.5v-9A3.5 3.5 0 0 0 16.5 4ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm5.75-2.15a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0Z"/>
+              </svg>
+            </a>
 
-        <a class="social" href="https://discord.gg/P3NjC9ZhtP" target="_blank" rel="noopener" aria-label="Discord">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path fill="currentColor" d="M19.5 5.3A15.3 15.3 0 0 0 15.7 4l-.2.4a13.9 13.9 0 0 1 3.1 1.6 11.6 11.6 0 0 0-4-1.2 12.6 12.6 0 0 0-5.2 0 11.6 11.6 0 0 0-4 1.2 13.9 13.9 0 0 1 3.1-1.6L8.3 4A15.3 15.3 0 0 0 4.5 5.3C2.7 8 2.1 10.7 2.3 13.3c1.2 1.8 2.9 3.2 4.9 4.1l.6-.8c-.7-.3-1.4-.7-2-1.2l.5-.4c1.2.9 2.6 1.5 4 1.7a13.1 13.1 0 0 0 3.4 0c1.4-.2 2.8-.8 4-1.7l.5.4c-.6.5-1.3.9-2 1.2l.6.8c2-.9 3.7-2.3 4.9-4.1.2-2.6-.4-5.3-2.2-8ZM9.1 12.8c-.7 0-1.3-.7-1.3-1.5s.6-1.5 1.3-1.5 1.3.7 1.3 1.5-.6 1.5-1.3 1.5Zm5.8 0c-.7 0-1.3-.7-1.3-1.5s.6-1.5 1.3-1.5 1.3.7 1.3 1.5-.6 1.5-1.3 1.5Z"/>
-          </svg>
-          <span>DC</span>
-        </a>
+            <a class="social" href="https://discord.gg/P3NjC9ZhtP" target="_blank" rel="noopener" aria-label="Discord">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M19.5 5.3A15.3 15.3 0 0 0 15.7 4l-.2.4a13.9 13.9 0 0 1 3.1 1.6 11.6 11.6 0 0 0-4-1.2 12.6 12.6 0 0 0-5.2 0 11.6 11.6 0 0 0-4 1.2 13.9 13.9 0 0 1 3.1-1.6L8.3 4A15.3 15.3 0 0 0 4.5 5.3C2.7 8 2.1 10.7 2.3 13.3c1.2 1.8 2.9 3.2 4.9 4.1l.6-.8c-.7-.3-1.4-.7-2-1.2l.5-.4c1.2.9 2.6 1.5 4 1.7a13.1 13.1 0 0 0 3.4 0c1.4-.2 2.8-.8 4-1.7l.5.4c-.6.5-1.3.9-2 1.2l.6.8c2-.9 3.7-2.3 4.9-4.1.2-2.6-.4-5.3-2.2-8ZM9.1 12.8c-.7 0-1.3-.7-1.3-1.5s.6-1.5 1.3-1.5 1.3.7 1.3 1.5-.6 1.5-1.3 1.5Zm5.8 0c-.7 0-1.3-.7-1.3-1.5s.6-1.5 1.3-1.5 1.3.7 1.3 1.5-.6 1.5-1.3 1.5Z"/>
+              </svg>
+            </a>
 
-        <a class="social" href="https://www.threads.com/@goodguysbets" target="_blank" rel="noopener" aria-label="Threads">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm4.73 14.18c-.54 1.18-1.88 2.12-3.58 2.12-2.05 0-3.65-1.25-3.65-3.25 0-1.72 1.2-2.87 3.12-3.09.77-.09 1.62.02 2.41.29-.18-.94-.76-1.56-1.73-1.87-1.12-.36-2.5-.23-3.77.35l-.63-1.38c1.58-.74 3.35-.9 4.9-.4 1.62.52 2.61 1.65 2.79 3.19.07.59.07 1.23-.01 1.88.47.38.86.87 1.05 1.47.19.58.15 1.2-.1 1.79Zm-2.35-1.64c-.57-.3-1.3-.45-2.07-.36-.9.1-1.46.55-1.46 1.32 0 .85.78 1.39 1.9 1.39 1.19 0 2.08-.72 2.26-1.55.1-.44.05-.64-.12-.8-.12-.12-.28-.23-.51-.4Z"/>
-          </svg>
-          <span>TH</span>
-        </a>
+            <a class="social" href="https://www.threads.com/@goodguysbets" target="_blank" rel="noopener" aria-label="Threads">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm4.73 14.18c-.54 1.18-1.88 2.12-3.58 2.12-2.05 0-3.65-1.25-3.65-3.25 0-1.72 1.2-2.87 3.12-3.09.77-.09 1.62.02 2.41.29-.18-.94-.76-1.56-1.73-1.87-1.12-.36-2.5-.23-3.77.35l-.63-1.38c1.58-.74 3.35-.9 4.9-.4 1.62.52 2.61 1.65 2.79 3.19.07.59.07 1.23-.01 1.88.47.38.86.87 1.05 1.47.19.58.15 1.2-.1 1.79Zm-2.35-1.64c-.57-.3-1.3-.45-2.07-.36-.9.1-1.46.55-1.46 1.32 0 .85.78 1.39 1.9 1.39 1.19 0 2.08-.72 2.26-1.55.1-.44.05-.64-.12-.8-.12-.12-.28-.23-.51-.4Z"/>
+              </svg>
+            </a>
 
-        <a class="social" href="https://www.youtube.com/@GoodGuysBets" target="_blank" rel="noopener" aria-label="YouTube">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path fill="currentColor" d="M21.6 7.2a3 3 0 0 0-2.1-2.12C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.48A3 3 0 0 0 2.4 7.2 31.3 31.3 0 0 0 2 12a31.3 31.3 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.12c1.8.48 7.5.48 7.5.48s5.7 0 7.5-.48a3 3 0 0 0 2.1-2.12A31.3 31.3 0 0 0 22 12a31.3 31.3 0 0 0-.4-4.8ZM10 15.5v-7l6 3.5-6 3.5Z"/>
-          </svg>
-          <span>YT</span>
-        </a>
+            <a class="social" href="https://www.youtube.com/@GoodGuysBets" target="_blank" rel="noopener" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M21.6 7.2a3 3 0 0 0-2.1-2.12C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.48A3 3 0 0 0 2.4 7.2 31.3 31.3 0 0 0 2 12a31.3 31.3 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.12c1.8.48 7.5.48 7.5.48s5.7 0 7.5-.48a3 3 0 0 0 2.1-2.12A31.3 31.3 0 0 0 22 12a31.3 31.3 0 0 0-.4-4.8ZM10 15.5v-7l6 3.5-6 3.5Z"/>
+              </svg>
+            </a>
+          </div>
+
+          <div class="footer-links">
+            <a href="/legal/">Terms</a>
+            <span>·</span>
+            <a href="/legal/#privacy">Privacy</a>
+          </div>
+        </div>
+
+        <div class="footer-legal">
+          <div>© 2026 FOURU MGMT, Inc.</div>
+          <div>
+            FOURU MGMT, Inc. is not a sportsbook and does not place wagers on behalf of others. All content is provided for informational and educational purposes only and should not be considered financial or investment advice. Past performance does not guarantee future results. Betting involves risk.
+          </div>
+          <div style="margin-top:10px;">
+            <strong>Affiliate Disclosure:</strong> FOURU MGMT, Inc. may receive compensation from partner sportsbooks.
+          </div>
+          <div style="margin-top:10px;">
+            <strong>Responsible Gambling:</strong> Call <a href="tel:1800426537">1-800-GAMBLER</a> for help.
+          </div>
+        </div>
       </div>
-
-      <div class="footer-links">
-        <a href="/legal/">Terms</a>
-        <span>·</span>
-        <a href="/legal/#privacy">Privacy</a>
-      </div>
-    </div>
-
-    <div class="footer-legal">
-      Powered by Winible • For entertainment &amp; educational purposes only. Not a sportsbook. Wager responsibly. 1-800-GAMBLER.
-    </div>
-  </div>
-</footer>
-
-
+    </footer>
 
     <div class="cookie-banner" id="cookieBanner" hidden>
       <div class="cookie-inner">
@@ -365,5 +535,70 @@
 
     <script src="/js/app.js"></script>
   </div>
+
+  <!-- =========================================
+       FLOATING VIP OFFER (PLACED OUTSIDE .page)
+       Shows every reload (no localStorage hiding)
+       Subtle fade-in after load (not aggressive)
+       Replace href with your Google Doc link.
+       ========================================= -->
+  <aside class="float-offer" id="floatOffer" aria-label="VIP free month offer">
+    <div class="offer-card">
+      <div class="offer-badge"><i aria-hidden="true"></i> Limited Offer</div>
+
+      <div class="offer-top">
+        <h3 class="offer-title">Want  <span>FREE</span>  months<br>inside our VIP group?</h3>
+        <button class="offer-close" id="offerClose" type="button" aria-label="Close offer">✕</button>
+      </div>
+
+      <div class="offer-sub">Quick form — we’ll get you taken care of.</div>
+
+      <!-- 🔥 Replace this URL with your Google Doc link -->
+      <a class="offer-btn" id="offerBtn" href="https://docs.google.com/document/d/1oYpHJoqj96L_InoUKWWT5BntvXw_GSCL04tV0yTdb3Y/edit?pli=1&tab=t.0" target="_blank" rel="noopener">
+        Claim Up To 6 Months Free<span class="offer-arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </aside>
+
+  <script>
+    (function () {
+      const offer = document.getElementById('floatOffer');
+      const closeBtn = document.getElementById('offerClose');
+      const cookieBanner = document.getElementById('cookieBanner');
+
+      if (!offer) return;
+
+      // subtle show after load (not a "pop")
+      const show = () => {
+        offer.classList.add('ready');
+      };
+      if (document.readyState === 'complete') setTimeout(show, 220);
+      else window.addEventListener('load', () => setTimeout(show, 220));
+
+      // Close only for this session/page view (shows again on reload)
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          offer.style.display = 'none';
+        });
+      }
+
+      // Lift offer if cookie banner is visible
+      const updateLift = () => {
+        try {
+          const isCookieVisible = cookieBanner && !cookieBanner.hidden;
+          if (isCookieVisible) offer.classList.add('lift');
+          else offer.classList.remove('lift');
+        } catch (e) {}
+      };
+
+      updateLift();
+
+      if (cookieBanner) {
+        const obs = new MutationObserver(updateLift);
+        obs.observe(cookieBanner, { attributes: true, attributeFilter: ['hidden', 'class', 'style'] });
+      }
+    })();
+  </script>
+
 </body>
 </html>
